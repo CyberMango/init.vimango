@@ -8,12 +8,12 @@ Main guidelines:
   - Portable - everything is in a single directories tree!
   - Follows most of /r/vim's best practices guide.
   - A minimal number of plugins.
-  
+
 Features:
-  - Summaries of great vim-related articles in docs.
+  - Summaries of great vim-related articles in my_wiki.
   - Language specific supports: cpp, python.
   - Easy use of tabpages, buffers and windows. Each used the way it was meant to be.
-  
+
 TODOs:
   - Finish configuring defx.nvim:
     * Add shortcuts for more actions like: open in split/vertical/tabpage, new dir, new file etc.
@@ -24,4 +24,4 @@ TODOs:
     * cpp lsp with ccls.
     * python lsp with kite.
     * fuzzy finding with coclists.
-    
+
