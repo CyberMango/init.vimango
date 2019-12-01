@@ -1,9 +1,0 @@
-[submodule "defx.nvim"]
-	path = defx.nvim
-	url = ./vim_plug/defx.nvim/
-[submodule "vim-gruvbox8"]
-	path = vim-gruvbox8
-	url = ./vim_plug/vim-gruvbox8/
-[submodule "nerdtree"]
-	path = nerdtree
-	url = ./vim_plug/nerdtree/

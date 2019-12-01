@@ -248,11 +248,11 @@ nnoremap Y y$
 " => Integrated terminal settings
 " * In these mappings, s stands for shell.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Move around the terminal in a way compatible with tmux.
-tnoremap <c-b>[ <c-\><c-n>
 tnoremap <c-b><c-[> <c-\><c-n>
 nnoremap <silent> gs <c-w>s:terminal<cr>i
 nnoremap <leader>ts :tabedit<cr>:terminal<cr>i
+" Move around the terminal in a way compatible with tmux.
+tnoremap <c-b>[ <c-\><c-n>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
