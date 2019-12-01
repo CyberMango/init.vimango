@@ -24,4 +24,6 @@ TODOs:
     * cpp lsp with ccls.
     * python lsp with kite.
     * fuzzy finding with coclists.
+  - reinstall ultisnips and make it integrate with coc.
+  - cleanup YCM and ListToggle.
 
