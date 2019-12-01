@@ -1,0 +1,38 @@
+symbol based navigation: navigating the file based on its symbols, without an lsp or tags file.
+
+commands:
+- :set path = a variable used as directories for file searching by many functions.
+- gf = goto file. uses the 'path' variable to find the file. uses 'includeexpr' if fails to find file.
+- :fin[d] = like :e, but looks for files in the 'path' variable.
+
+- :set include = how links (includes/imports) to other files look like. seems to be auto configured for python and c.
+- :set includeexpr = expressoin telling how to transform a filename into a path.
+- :set define = how a macro definition looks like. can be used for things other than macros (functions/classes...).
+                for classes: :set define=class\\s
+- :set suffixesadd = Comma separated list of suffixes, which are used when searching for a file for
+                     the "gf", "[I", etc. commands.
+- :ij[ump] <pattern> = jump to the first match of <pattern> in includes.
+- :ij[ump] /<pattern> = like the above, but with a partial pattern.
+- [<c-i> = like :ij but for the current word.
+- :is[earch] [/]<pattern> = Display the first line that contains pattern. / for partial patterns.
+- [i = like :isearch for the word under the cursor.
+- :il[ist] [/]<pattern> - Display all lines that contain pattern.
+                          Should be combined with :ijump <count> [/]<pattern>. see notes.
+- [I - like :ilist but for the word under the cursor.
+
+notes:
+* All the above commands can be used for defines (i->d, I->D).
+* defines are more precise, but less general.
+* Include based navigations (i commands) are not precise for large projects.
+* To combine :ilist with :ijump, a possible setting is:
+function! CCR()
+    let cmdline = getcmdline()
+    if cmdline =~ '\v\C^(dli|il)'
+        return "\<CR>:" . cmdline[0] . "j  " . split(cmdline, " ")[1] . "\<S-Left>\<Left>"
+    else
+        return "\<CR>"
+    endif
+endfunction
+cnoremap <expr> <CR> CCR()
+
+for a more generalized version, see in github romainl/vim_pushing_built-in_features_beyond_their_limits.markdown .

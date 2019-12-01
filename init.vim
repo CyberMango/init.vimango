@@ -1,0 +1,339 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Table of contents:
+" => General and UI configs
+" => Colors, Fonts, ...
+" => Text, tab and indent related
+" => Visual mode related
+" => Moving around, tabpages, windows and buffers
+" => Status line
+" => Editing mappings
+" => Integrated terminal settings
+" => Spell checking
+" => Helper functions
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General and UI configs
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General and obvious
+set number
+set nowrap
+let mapleader = '\'
+
+" Scroll page with 1 line space
+set so=1
+
+" Number of commands to remember
+set history=500
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Search related configurations
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+nnoremap <silent> <c-[> :noh<cr>
+
+" Easy copy-paste between different vim sessions
+inoremap <c-c> <nop>
+vnoremap <c-c> <nop>
+vnoremap <c-c>c "+y
+vnoremap <c-c>x "+d
+vnoremap <c-c>v "+p
+nnoremap <c-c>v "+p
+inoremap <c-c>v <esc>"+pa
+
+" Show current position in file
+set ruler
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" Set wildmenu (autocompletions in command line)
+set wildmenu
+set wildmode=longest,full
+" Command prompt completion keystroke
+set wildchar=<tab>
+" How to refer to wildchar inside of mappings
+set wildcharm=<c-z>
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
+endif
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+
+" Allow left/right to move between lines
+"set whichwrap+=<,>,h,l
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+
+" wait 500 milliseconds for mappings to complete
+set timeoutlen=500
+
+" Reload vim configs when changing them
+autocmd! bufwritepost $MYVIMRC source $MYVIMRC
+autocmd! bufwritepost $VIMD/plugin/* source %
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors, Fonts, ...
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable syntax highlighting
+syntax on
+
+set termguicolors
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Chosen colorscheme
+colorscheme gruvbox8
+
+" Add this to the end of $VIMRUNTIMEPATH/syntax/syntax.vim
+"let g:gruvbox_italics = 0
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tab settings
+set expandtab
+set smarttab
+" 1 tab = 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+set autoindent
+
+" Dont auto comment when going down a line in a comment with enter or O/o.
+autocmd FileType * setlocal formatoptions-=r formatoptions-=o
+
+" Remove trailing whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
+
+""""""""""""""""""""""""""""""
+" => Visual mode related
+""""""""""""""""""""""""""""""
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+" Stay in visual mode after indenting
+vnoremap > >gv
+vnoremap < <gv
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabpages, windows and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Windows
+" Smart way to move between windows
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+
+" Use Q to exit an unchanged window (usefull for helper windows)
+nnoremap <silent> Q :q<cr>
+
+" Open new split panes on the bottom and on the right
+set splitbelow splitright
+
+""" Buffers
+" A buffer becomes hidden when it is abandoned
+set hidden
+
+" Allow actions like :find and gf to find files in sub-directories of :pwd
+set path=.,**
+
+" Use :f, :sf and :vf as shortcuts for using :find
+abbreviate f find
+abbreviate sf sfind
+abbreviate vf vert sfind
+
+" Use existing buffers in the current tab if already open.
+set switchbuf=useopen
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Buffer navigation (mostly done with gb. Page up/down is for a lazy mood).
+nnoremap gb :ls<CR>:b<Space>
+nnoremap <PageUp> :bnext<cr>
+nnoremap <PageDown> :bprevious<cr>
+nnoremap <leader>bs :ls<cr>:sb<space>
+nnoremap <leader>bv :ls<cr>:vert sb<space>
+
+" Closing buffers.
+nnoremap <leader>bd :bdelete<cr>
+nnoremap <silent> <leader>ba :w<cr>:%bd<cr><c-o>:bd#<cr>
+
+""" Tabpages
+" Enable switching to last-active tab
+if !exists('g:Lasttab')
+    let g:Lasttab = 1
+    let g:Lasttab_backup = 1
+endif
+autocmd! TabLeave * let g:Lasttab_backup = g:Lasttab | let g:Lasttab = tabpagenr()
+autocmd! TabClosed * let g:Lasttab = g:Lasttab_backup
+
+" Useful mappings for managing tabs
+nnoremap <leader>te :tabedit<space>
+nnoremap <leader>tf :tabfind<space>
+nnoremap <leader>to :tabonly<cr>
+nnoremap <leader>tc :tabclose<cr>
+nnoremap <leader>tm :tabmove<cr>
+nnoremap <leader>tn :tabnext<cr>
+nnoremap <leader>tp :tabprevious<cr>
+nnoremap <c-pageup> :tabnext<cr>
+nnoremap <c-pagedown> :tabprevious<cr>
+nnoremap <silent> <Leader>tt :execute "tabn " . g:Lasttab<cr>
+
+" Make better labels for tabpages
+:set tabline=%!MyTabLine()
+
+" Switch CWD to the directory of the open buffer. Global for all tabpages.
+nnoremap <leader>cd :cd %:p:h<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Status line
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+"set statusline=\ %F\ \ Line:\ %l\ \ Column:\ %c
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map 9 ^
+
+" Move a line of text using ctrl+alt+arrow
+" TODO when you move to a better terminal than cmder, change these to m-h/j/k/l or c-m-h/j/k/l
+nnoremap <C-m-down> mz:m+<cr>`z
+nnoremap <C-m-up> mz:m-2<cr>`z
+vnoremap <C-m-down> :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <C-m-up> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <C-m-right> >>
+nnoremap <C-m-left> <<
+vnoremap <C-m-right> >gv4l
+vnoremap <C-m-left> <gv4h
+
+" Allow paste and undo in insert mode
+inoremap <c-u> <esc>ua
+inoremap <c-v> <c-g>u<esc>pa<c-g>u
+
+" Make Y yank to end of line (much like C and D)
+nnoremap Y y$
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Integrated terminal settings
+" * In these mappings, s stands for shell.
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Move around the terminal in a way compatible with tmux.
+tnoremap <c-b>[ <c-\><c-n>
+tnoremap <c-b><c-[> <c-\><c-n>
+nnoremap <silent> gs <c-w>s:terminal<cr>i
+nnoremap <leader>ts :tabedit<cr>:terminal<cr>i
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pressing <leader>ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function MyTabLine()
+    let s = ''
+    for i in range(tabpagenr('$'))
+        " select the highlighting
+        if i + 1 == tabpagenr()
+            let s .= '%#TabLineSel#'
+        else
+            let s .= '%#TabLine#'
+        endif
+
+        if 0 != i
+            let s .= '|  '
+        endif
+
+        " set the tab page number (for mouse clicks)
+        let s .= '%' . (i + 1) . 'T'
+        " set page number string
+        let s .= i + 1 . ''
+        " the label is made by MyTabLabel()
+        let s .= '%{MyTabLabel(' . (i + 1) . ')}  '
+    endfor
+
+    " after the last tab fill with TabLineFill and reset tab page nr
+    let s .= '%#TabLineFill#%T'
+
+    " right-align the label to close the current tab page
+    if tabpagenr('$') > 1
+        let s .= '%=%#TabLine#%999Xclose'
+    endif
+
+    return s
+endfunction
+
+function MyTabLabel(n)
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    let is_modified = 0
+    let label = ''
+
+    for buffer in buflist
+        if getbufvar(buffer, "&modified")
+            let is_modified = 1
+            break
+        endif
+    endfor
+
+    if is_modified == 1
+        let label .= '❕'
+    else
+        let label .= ' '
+    endif
+
+    let label .= fnamemodify(bufname(buflist[winnr - 1]), ':t')
+
+    return label
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin("~/.config/nvim/vim_plug")
+Plug 'scrooloose/nerdtree'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Colorschemes
+Plug 'lifepillar/vim-gruvbox8'
+call plug#end()
+
