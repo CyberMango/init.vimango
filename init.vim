@@ -4,7 +4,7 @@
 " => Colors, Fonts, ...
 " => Text, tab and indent related
 " => Visual mode related
-" => Moving around, tabpages, windows and buffers
+" => Tabpages, windows and buffers
 " => Status line
 " => Editing mappings
 " => Integrated terminal settings
@@ -19,7 +19,7 @@
 " General and obvious
 set number
 set nowrap
-let mapleader = '\'
+let mapleader = ' '
 
 " Scroll page with 1 line space
 set so=1
@@ -52,6 +52,9 @@ set ruler
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
+
+" How vim completions work
+set completeopt=longest,menuone,preview
 
 " Set wildmenu (autocompletions in command line)
 set wildmenu
@@ -141,7 +144,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabpages, windows and buffers
+" => Tabpages, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Windows
 " Smart way to move between windows
