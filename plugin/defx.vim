@@ -3,9 +3,11 @@
 " Openning, focusing and closing settings
 " TODO do that if the tree is opened, close it without changing the current
 " pane (even when on a very right sided pane). might need to use <c-w><c-p>.
-nnoremap <a-\> <c-w>t:Defx -toggle<cr>
+nnoremap <a-/> <c-w>t:Defx -toggle<cr>
 " TODO do that the default size wont be restored on resume.
-nnoremap <c-\> :Defx -resume<cr>
+nnoremap <c-/> :Defx -resume<cr>
+" Make <c-/> also work on deepin-terminal
+nmap  <c-/>
 
 " Settings
 call defx#custom#column('icon', {
@@ -41,7 +43,7 @@ autocmd BufWritePost * call defx#redraw()
 function! s:defx_my_settings() abort
     " Define mappings
     set cursorline
-    nnoremap <silent><buffer> <c-\> <c-w><c-p>
+    nnoremap <silent><buffer> <c-/> <c-w><c-p>
     nnoremap <silent><buffer><expr> > defx#do_action('resize', defx#get_context().winwidth + 1)
     nnoremap <silent><buffer><expr> < defx#do_action('resize', defx#get_context().winwidth - 1)
     nnoremap <silent><buffer><expr> d defx#do_action('new_directory')
