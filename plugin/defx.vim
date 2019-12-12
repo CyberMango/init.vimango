@@ -1,9 +1,8 @@
 " Shougo/defx.nvim plugin configurations
 
 " Openning, focusing and closing settings
-" TODO do that if the tree is opened, close it without changing the current
-" pane (even when on a very right sided pane). might need to use <c-w><c-p>.
-nnoremap <a-/> <c-w>t:Defx -toggle<cr>
+" TODO decide if the shortcuts will use '/' or '\'
+nnoremap <a-/> :Defx -toggle<cr>
 " TODO do that the default size wont be restored on resume.
 nnoremap <c-/> :Defx -resume<cr>
 " Make <c-/> also work on deepin-terminal
@@ -30,9 +29,9 @@ call defx#custom#option('_', {
     \ 'winwidth': 26,
     \ 'split': 'vertical',
     \ 'show_ignored_files': 1,
-    \ 'buffer_name': 'defx_buffer',
     \ 'direction': 'topleft',
-    \ 'root_marker': '\r [in]: '
+    \ 'root_marker': '[in]: ',
+    \ 'listed': 1
     \ })
 
 " Auto actions
@@ -50,7 +49,6 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> f defx#do_action('new_file')
     nnoremap <silent><buffer><expr> . defx#do_action('repeat')
     nnoremap <silent><buffer><expr> r defx#do_action('rename')
-    " TODO make <cr> open the file in a new tab after you learn vim tabs.
     nnoremap <silent><buffer><expr> <cr> defx#is_directory() ?
         \ defx#async_action("open_or_close_tree") :
         \ defx#async_action('drop')
