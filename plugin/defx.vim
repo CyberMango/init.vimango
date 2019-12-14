@@ -1,14 +1,15 @@
-" Shougo/defx.nvim plugin configurations
+""" Shougo/defx.nvim plugin configurations
 
 " Openning, focusing and closing settings
 " TODO decide if the shortcuts will use '/' or '\'
 nnoremap <a-/> :Defx -toggle<cr>
 " TODO do that the default size wont be restored on resume.
-nnoremap <c-/> :Defx -resume<cr>
+nnoremap <silent> <c-/> :call DefxFocus()<cr>
+
 " Make <c-/> also work on deepin-terminal
 nmap  <c-/>
 
-" Settings
+""" Settings
 call defx#custom#column('icon', {
     \ 'directory_icon': '⮞',
     \ 'opened_icon': '⮟',
@@ -26,23 +27,24 @@ call defx#custom#column('mark', {
     \ })
 
 call defx#custom#option('_', {
-    \ 'winwidth': 26,
+    \ 'winwidth': 24,
     \ 'split': 'vertical',
     \ 'show_ignored_files': 1,
     \ 'direction': 'topleft',
     \ 'root_marker': '[in]: ',
-    \ 'listed': 1
+    \ 'listed': 0
     \ })
 
-" Auto actions
+""" Auto actions
 autocmd FileType defx call s:defx_my_settings()
 autocmd BufWritePost * call defx#redraw()
 
-" Keymap settings
+""" Keymap settings
 function! s:defx_my_settings() abort
     " Define mappings
-    set cursorline
+    setlocal cursorline
     nnoremap <silent><buffer> <c-/> <c-w><c-p>
+    nnoremap <silent><buffer> v V
     nnoremap <silent><buffer><expr> > defx#do_action('resize', defx#get_context().winwidth + 1)
     nnoremap <silent><buffer><expr> < defx#do_action('resize', defx#get_context().winwidth - 1)
     nnoremap <silent><buffer><expr> d defx#do_action('new_directory')
@@ -66,14 +68,7 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> d defx#async_action("remove")
 endfunc
 
-" Supporting functions
-function Defx_focus(context) abort
-    Defx -resume
-endfunc
-
-function Nothing() abort
-endfunc
-
+""" Supporting functions
 "TODO realise why this function doesnt work!!!!
 function Defx_open() abort
     if defx#is_directory()
@@ -84,4 +79,14 @@ function Defx_open() abort
         return 0
     endif
 endfunc
+
+" Toggle defx focus without resizing the window to winwidth.
+function! DefxFocus() abort
+    let g:defx_win_id = bufwinid("[defx] default-0")
+    if g:defx_win_id == -1
+        Defx
+    else
+        call win_gotoid(g:defx_win_id)
+    endif
+endfunction
 

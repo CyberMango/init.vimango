@@ -95,6 +95,9 @@ set timeoutlen=500
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 autocmd! bufwritepost $VIMD/plugin/* source %
 
+" Allow mouse control in normal, visual and command modes.
+set mouse=nvc
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors, Fonts, ...
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
