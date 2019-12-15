@@ -80,7 +80,7 @@ function Defx_open() abort
     endif
 endfunc
 
-" Toggle defx focus without resizing the window to winwidth.
+" Defx focus without resizing the window to winwidth.
 function! DefxFocus() abort
     let g:defx_win_id = bufwinid("[defx] default-0")
     if g:defx_win_id == -1
