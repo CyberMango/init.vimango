@@ -98,6 +98,9 @@ set timeoutlen=500
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 autocmd! bufwritepost $VIMD/plugin/* source %
 
+" Allow mouse control in normal, visual and command modes.
+set mouse=nvc
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors, Fonts, ...
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -110,9 +113,11 @@ set termguicolors
 set encoding=utf8
 
 " Chosen colorscheme
-colorscheme gruvbox8
+colorscheme gruvbox8_hard
+" Set background (only needed for vim).
+set background=dark
 
-" Add this to the end of $VIMRUNTIMEPATH/syntax/syntax.vim
+" @@@@ Add this to the end of $VIMRUNTIMEPATH/syntax/syntax.vim
 "let g:gruvbox_italics = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -127,6 +132,7 @@ set tabstop=4
 set autoindent
 
 " Dont auto comment when going down a line in a comment with enter or O/o.
+"TODO check if this really needs to be in an autocmd
 autocmd FileType * setlocal formatoptions-=r formatoptions-=o
 
 " Remove trailing whitespace on save
@@ -181,14 +187,14 @@ set switchbuf=useopen
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " Buffer navigation (mostly done with gb. Page up/down is for a lazy mood).
-nnoremap gb :ls<CR>:b<Space>
+nnoremap gb :ls<CR>:b<space>
 nnoremap <PageUp> :bnext<cr>
 nnoremap <PageDown> :bprevious<cr>
 nnoremap <leader>bs :ls<cr>:sb<space>
 nnoremap <leader>bv :ls<cr>:vert sb<space>
 
-" Deleting buffers.
-nnoremap <leader>bd :bdelete<cr>
+" Closing buffers.
+nnoremap <leader>bd :ls<cr>:bdelete<space>
 nnoremap <silent> <leader>ba :w<cr>:%bd<cr><c-o>:bd#<cr>
 
 """ Tabpages
@@ -213,7 +219,8 @@ nnoremap <c-pagedown> :tabprevious<cr>
 nnoremap <silent> <Leader>tt :execute "tabn " . g:Lasttab<cr>
 
 " Make better labels for tabpages
-:set tabline=%!MyTabLine()
+" Unset this if you want to use my tabline instead of airline's.
+"set tabline=%!MyTabLine()
 
 " Switch CWD to the directory of the open buffer. Global for all tabpages.
 nnoremap <leader>cd :cd %:p:h<cr>
@@ -254,11 +261,13 @@ nnoremap Y y$
 " => Integrated terminal settings
 " * In these mappings, s stands for shell.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-tnoremap <c-b><c-[> <c-\><c-n>
 nnoremap <silent> gs <c-w>s:terminal<cr>i
 nnoremap <leader>ts :tabedit<cr>:terminal<cr>i
 " Move around the terminal in a way compatible with tmux.
 tnoremap <c-b>[ <c-\><c-n>
+tnoremap <c-b><c-[> <c-\><c-n>
+
+autocmd TermOpen * setlocal nonumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -286,7 +295,7 @@ function MyTabLine()
         endif
 
         if 0 != i
-            let s .= '|  '
+            let s .= '╲  '
         endif
 
         " set the tab page number (for mouse clicks)
@@ -335,11 +344,22 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin("~/.config/nvim/vim_plug")
-Plug 'scrooloose/nerdtree'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" Colorschemes
-Plug 'lifepillar/vim-gruvbox8'
-call plug#end()
+" Only use plugins for neovim, not vim.
+if has('nvim')
+    call plug#begin("~/.config/nvim/vim_plug")
+    Plug 'scrooloose/nerdtree'
+    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+
+    " Colorschemes
+    Plug 'lifepillar/vim-gruvbox8'
+
+    Plug 'vim-airline/vim-airline'
+    call plug#end()
+endif
 
