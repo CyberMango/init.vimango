@@ -155,6 +155,8 @@ nnoremap <C-l> <C-W>l
 
 " Use Q to exit an unchanged window (usefull for helper windows)
 nnoremap <silent> Q :q<cr>
+" Disable command history (I type this way too many times wrong)
+nnoremap q: :q
 
 " Open new split panes on the bottom and on the right
 set splitbelow splitright
@@ -170,6 +172,7 @@ set path=.,**
 abbreviate f find
 abbreviate sf sfind
 abbreviate vf vert sfind
+"TODO add shortcuts (not commands) for :find,:sfind and :vert sfind
 
 " Use existing buffers in the current tab if already open.
 set switchbuf=useopen
@@ -184,7 +187,7 @@ nnoremap <PageDown> :bprevious<cr>
 nnoremap <leader>bs :ls<cr>:sb<space>
 nnoremap <leader>bv :ls<cr>:vert sb<space>
 
-" Closing buffers.
+" Deleting buffers.
 nnoremap <leader>bd :bdelete<cr>
 nnoremap <silent> <leader>ba :w<cr>:%bd<cr><c-o>:bd#<cr>
 
