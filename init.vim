@@ -214,6 +214,7 @@ nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tm :tabmove<cr>
 nnoremap <leader>tn :tabnext<cr>
 nnoremap <leader>tp :tabprevious<cr>
+nnoremap <leader>th :tab help<space>
 nnoremap <c-pageup> :tabnext<cr>
 nnoremap <c-pagedown> :tabprevious<cr>
 nnoremap <silent> <Leader>tt :execute "tabn " . g:Lasttab<cr>
