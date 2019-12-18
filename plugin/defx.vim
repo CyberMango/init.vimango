@@ -35,6 +35,7 @@ function! s:defx_my_settings() abort
     setlocal cursorline
     nnoremap <silent><buffer> <c-/> <c-w><c-p>
     nnoremap <silent><buffer> v V
+    nnoremap <silent><buffer> <c-[> :noh<cr>:call defx#call_async_action("clear_select_all")<cr>
     nnoremap <silent><buffer><expr> <space> defx#do_action('toggle_select')
     vnoremap <silent><buffer><expr> <space> defx#do_action('toggle_select_visual')
     nnoremap <silent><buffer><expr> . defx#do_action('repeat')
