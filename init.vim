@@ -352,7 +352,6 @@ endif
 " Only use plugins for neovim, not vim.
 if has('nvim')
     call plug#begin("~/.config/nvim/vim_plug")
-    Plug 'scrooloose/nerdtree'
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
     " Colorschemes
