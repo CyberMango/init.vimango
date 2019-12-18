@@ -1,6 +1,6 @@
 """ Shougo/defx.nvim plugin configurations
 
-" Openning, focusing and closing settings
+""" Openning, focusing and closing settings
 " TODO decide if the shortcuts will use '/' or '\'
 nnoremap <a-/> :Defx -toggle<cr>
 " TODO do that the default size wont be restored on resume.
@@ -53,7 +53,7 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> r defx#do_action('rename')
     nnoremap <silent><buffer><expr> <cr> defx#is_directory() ?
         \ defx#async_action("open_or_close_tree") :
-        \ defx#async_action('drop')
+        \ defx#async_action("drop")
     nnoremap <silent><buffer><expr> l defx#is_directory() ?
         \ defx#async_action("open_tree") :
         \ defx#do_action('multi', ['drop', ['call',  'Defx_focus']])
@@ -66,6 +66,7 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> p defx#async_action("paste")
     " TODO change to trash bin remove when you config it system-wise
     nnoremap <silent><buffer><expr> d defx#async_action("remove")
+    nnoremap <silent><buffer><expr> s defx#async_action("drop", "split")
 endfunc
 
 """ Supporting functions
