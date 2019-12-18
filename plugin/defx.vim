@@ -2,7 +2,7 @@
 
 """ Openning, focusing and closing settings
 " TODO decide if the shortcuts will use '/' or '\'
-nnoremap <a-/> :Defx -toggle<cr>
+nnoremap <silent> <a-/> :call DefxToggle()<cr>
 " TODO do that the default size wont be restored on resume.
 nnoremap <silent> <c-/> :call DefxFocus()<cr>
 
@@ -24,15 +24,6 @@ call defx#custom#column('filename', {
 call defx#custom#column('mark', {
     \ 'readonly_icon': 'R',
     \ 'selected_icon': '✓',
-    \ })
-
-call defx#custom#option('_', {
-    \ 'winwidth': 24,
-    \ 'split': 'vertical',
-    \ 'show_ignored_files': 1,
-    \ 'direction': 'topleft',
-    \ 'root_marker': '[in]: ',
-    \ 'listed': 0
     \ })
 
 """ Auto actions
@@ -81,13 +72,17 @@ function Defx_open() abort
     endif
 endfunc
 
+" Open/close defx with my preferred settings.
+function DefxToggle() abort
+    Defx -toggle -show-ignored-files -split='vertical' -direction='topleft' -winwidth=24
+endfunction
+
 " Toggle defx focus without resizing the window to winwidth.
 function! DefxFocus() abort
-    let g:defx_win_id = bufwinid("[defx] default-0")
-    if g:defx_win_id == -1
-        Defx
+    if bufwinid("[defx] default-0") == -1
+        call DefxToggle()
     else
-        call win_gotoid(g:defx_win_id)
+        Defx
     endif
 endfunction
 
