@@ -352,11 +352,16 @@ endif
 " Only use plugins for neovim, not vim.
 if has('nvim')
     call plug#begin("~/.config/nvim/vim_plug")
+    " File explorer.
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
-    " Colorschemes
+    " LSP.
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+    " Colorschemes.
     Plug 'lifepillar/vim-gruvbox8'
 
+    " Statusline/Tabline manager.
     Plug 'vim-airline/vim-airline'
     call plug#end()
 endif
