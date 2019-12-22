@@ -4,8 +4,8 @@ if !exists('g:airline_symbols')
 endif
 
 " airline symbols
-let g:airline_left_sep = '▙'
-let g:airline_right_sep = '▜'
+"let g:airline_left_sep = '▙'
+"let g:airline_right_sep = '▜'
 let g:airline_symbols.crypt = '🔒'
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
@@ -21,8 +21,8 @@ let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_close_button = 0
 
-let g:airline#extensions#tabline#left_sep = '▙'
-let g:airline#extensions#tabline#right_sep = '▜'
+"let g:airline#extensions#tabline#left_sep = '▙'
+"let g:airline#extensions#tabline#right_sep = '▜'
 " Show tab numbers
 let g:airline#extensions#tabline#tab_nr_type = 1
 

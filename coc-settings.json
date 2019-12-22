@@ -1,0 +1,19 @@
+{
+    "suggest.minTriggerInputLength": 2,
+    "suggest.snippetIndicator": "►",
+
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp"],
+            "rootPatterns": [".git/", ".ccls-root", "compile_commands.json"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
+    }
+
+}
+

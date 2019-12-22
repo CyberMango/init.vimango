@@ -4,7 +4,7 @@
 " => Colors, Fonts, ...
 " => Text, tab and indent related
 " => Visual mode related
-" => Moving around, tabpages, windows and buffers
+" => Tabpages, windows and buffers
 " => Status line
 " => Editing mappings
 " => Integrated terminal settings
@@ -52,6 +52,9 @@ set ruler
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
+
+" How vim completions work
+set completeopt=longest,menuone,preview
 
 " Set wildmenu (autocompletions in command line)
 set wildmenu
@@ -111,6 +114,8 @@ set encoding=utf8
 
 " Chosen colorscheme
 colorscheme gruvbox8_hard
+" Set background (only needed for vim).
+set background=dark
 
 " @@@@ Add this to the end of $VIMRUNTIMEPATH/syntax/syntax.vim
 "let g:gruvbox_italics = 0
@@ -145,7 +150,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabpages, windows and buffers
+" => Tabpages, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Windows
 " Smart way to move between windows
@@ -156,6 +161,8 @@ nnoremap <C-l> <C-W>l
 
 " Use Q to exit an unchanged window (usefull for helper windows)
 nnoremap <silent> Q :q<cr>
+" Disable command history (I type this way too many times wrong)
+nnoremap q: :q
 
 " Open new split panes on the bottom and on the right
 set splitbelow splitright
@@ -171,6 +178,7 @@ set path=.,**
 abbreviate f find
 abbreviate sf sfind
 abbreviate vf vert sfind
+"TODO add shortcuts (not commands) for :find,:sfind and :vert sfind
 
 " Use existing buffers in the current tab if already open.
 set switchbuf=useopen
@@ -204,8 +212,7 @@ nnoremap <leader>tf :tabfind<space>
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tm :tabmove<cr>
-nnoremap <leader>tn :tabnext<cr>
-nnoremap <leader>tp :tabprevious<cr>
+nnoremap <leader>th :tab help<space>
 nnoremap <c-pageup> :tabnext<cr>
 nnoremap <c-pagedown> :tabprevious<cr>
 nnoremap <silent> <Leader>tt :execute "tabn " . g:Lasttab<cr>
@@ -342,13 +349,20 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin("~/.config/nvim/vim_plug")
-Plug 'scrooloose/nerdtree'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+" Only use plugins for neovim, not vim.
+if has('nvim')
+    call plug#begin("~/.config/nvim/vim_plug")
+    " File explorer.
+    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" Colorschemes
-Plug 'lifepillar/vim-gruvbox8'
+    " LSP.
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'vim-airline/vim-airline'
-call plug#end()
+    " Colorschemes.
+    Plug 'lifepillar/vim-gruvbox8'
+
+    " Statusline/Tabline manager.
+    Plug 'vim-airline/vim-airline'
+    call plug#end()
+endif
 
