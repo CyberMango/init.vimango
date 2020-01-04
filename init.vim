@@ -241,7 +241,6 @@ set laststatus=2
 map 9 ^
 
 " Move a line of text using ctrl+alt+arrow
-" TODO when you move to a better terminal than cmder, change these to m-h/j/k/l or c-m-h/j/k/l
 nnoremap <m-j> mz:m+<cr>`z
 nnoremap <m-k> mz:m-2<cr>`z
 vnoremap <m-j> :m'>+<cr>`<my`>mzgv`yo`z
@@ -262,13 +261,15 @@ nnoremap Y y$
 " => Integrated terminal settings
 " * In these mappings, s stands for shell.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> gs <c-w>s:terminal<cr>i
-nnoremap <leader>ts :tabedit<cr>:terminal<cr>i
-" Move around the terminal in a way compatible with tmux.
-tnoremap <c-b>[ <c-\><c-n>
-tnoremap <c-b><c-[> <c-\><c-n>
+if has('nvim')
+    nnoremap <silent> gs <c-w>s:terminal<cr>i
+    nnoremap <leader>ts :tabedit<cr>:terminal<cr>i
+    " Move around the terminal in a way compatible with tmux.
+    tnoremap <c-b>[ <c-\><c-n>
+    tnoremap <c-b><c-[> <c-\><c-n>
 
-autocmd TermOpen * setlocal nonumber
+    autocmd TermOpen * setlocal nonumber
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -285,6 +286,7 @@ map <leader>s? z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Tabline format functions.
 function MyTabLine()
     let s = ''
     for i in range(tabpagenr('$'))
@@ -340,6 +342,28 @@ function MyTabLabel(n)
     let label .= fnamemodify(bufname(buflist[winnr - 1]), ':t')
 
     return label
+endfunction
+
+
+function! CmdLine(str)
+    call feedkeys(":" . a:str)
+endfunction
+
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
