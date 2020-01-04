@@ -58,7 +58,7 @@ nmap <silent> gr <Plug>(coc-references)
 " ask this on gitter
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 " Close a help floating window.
-nnoremap <silent> <c-[> <esc>:noh<cr>:call CloseHelpWin()<cr>
+nmap <silent> <c-[> <esc>:noh<cr><Plug>(coc-float-hide)
 
 " Rename current word.
 "TODO it works in a weird way, that until you save all buffer, the new name is
@@ -159,22 +159,11 @@ function! s:check_back_space() abort
 endfunction
 
 
-let g:help_win_id = -1
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
     else
         call CocAction('doHover')
-        " TODO remove this if a way to close help floating windows is found.
-        wincmd p
-        let g:help_win_id = win_getid()
-        wincmd p
     endif
 endfunction
 
-
-function! CloseHelpWin()
-    if (1 == win_gotoid(g:help_win_id))
-        quit
-    endif
-endfunction
