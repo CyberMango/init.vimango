@@ -113,8 +113,6 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CocList
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"TODO try all of these!!!
-"TODO decide on better mappings for these.
 " Show all diagnostics
 nnoremap <silent> <leader>za  :<C-u>CocList diagnostics<cr>
 " Manage extensions
@@ -133,6 +131,9 @@ nnoremap <silent> <leader>zk  :<C-u>CocPrev<CR>
 nnoremap <silent> <leader>zp  :<C-u>CocListResume<CR>
 " Find files in cwd.
 nnoremap <silent> <leader>zf  :<C-u>CocList files<CR>
+" Find buffers.
+"TODO map <c-s> and <c-v> to open with splits.
+nnoremap <silent> <leader>bz  :<C-u>CocList buffers<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocommands
@@ -143,7 +144,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup mygroup
     autocmd!
     " Setup formatexpr specified filetype(s).
-    " TODO understand this.
     autocmd FileType json setlocal formatexpr=CocAction('formatSelected')
     " Update signature help on jump placeholder.
     "TODO realise exactly what this does.

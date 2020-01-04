@@ -33,4 +33,4 @@ let g:airline#extensions#tabline#right_alt_sep = '╲'
 let g:airline#extensions#tabline#show_tab_type = 0
 
 " Coc
-let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#coc#enabled = 0

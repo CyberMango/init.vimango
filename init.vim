@@ -183,7 +183,7 @@ abbreviate vf vert sfind
 " Use existing buffers in the current tab if already open.
 set switchbuf=useopen
 
-" Return to last edit position when opening files (You want this!)
+" Return to last edit position when opening files (You want this!).
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " Buffer navigation (mostly done with gb. Page up/down is for a lazy mood).
