@@ -18,10 +18,10 @@ set nowritebackup
 
 " Bigger messages display.
 "TODO consider changing this.
-set cmdheight=2
+set cmdheight=1
 
 " Faster diagnostic messages (defaults 4000)
-set updatetime=300
+set updatetime=200
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -47,27 +47,31 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Keys for gotos.
-" TODO Map gd only for languages you have an lsp for. when you find a way to
-" programmatically tell if an lsp exists, change this. maybe just use
-" <leader>l* for these actions.
-"nmap <silent> gd <Plug>(coc-definition)
+" Add any filetype with an lsp to this au.
+autocmd FileType c,cpp nmap <silent> gd <Plug>(coc-declaration)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> ge <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window (Or :help for vim keywords).
+"TODO find out how to close it without just moving out of the symbol.
+" ask this on gitter
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Close a help floating window.
+nnoremap <silent> <c-[> <esc>:noh<cr>:call CloseHelpWin()<cr>
 
 " Rename current word.
+"TODO it works in a weird way, that until you save all buffer, the new name is
+"not recognized. Do that it will keep analytics before saving.
 nmap <leader>lr <Plug>(coc-rename)
 
 " Format selected region.
-"TODO manage to use this, and consider making this l= if it works like =.
 xmap <leader>lf  <Plug>(coc-format-selected)
 nmap <leader>lf  <Plug>(coc-format-selected)
 
-" Do codeAction for selected region, ex: `<leader>aap` for current paragraph.
+" Do codeAction for selected region, ex: `<leader>laap` for current paragraph.
 "TODO realise how you choose the action.
+"TODO look for useful actions, and maybe map them separately.
 xmap <leader>la  <Plug>(coc-codeaction-selected)
 nmap <leader>la  <Plug>(coc-codeaction-selected)
 
@@ -78,31 +82,33 @@ nmap <leader>lq  <Plug>(coc-fix-current)
 
 " Create mappings for function text object (requires document symbols feature of languageserver).
 "TODO this is probably like i} and a} (like di}, da}). CONFIRM this!
+"TODO this doesnt work!!!
 xmap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" Not supported by ccls.
 "TODO understand what this does!
 nmap <silent> <C-d> <Plug>(coc-range-select)
 xmap <silent> <C-d> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer.
-"TODO try this.
+"TODO config .clang-format to your conventions.
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` to fold current buffer.
-"TODO try this!
-command! -nargs=? Fold :call CocAction('fold', <f-args>)F
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+command! -nargs=? Unfold :0,$foldopen
 
 " use `:OR` to organize imports of current buffer.
-"TODO understand this!
+"TODO understand this. you seem to dont have this action. check if ccls has
+"it, and generally what the hell is it.
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add status line support for integration with other plugins. checkout `:h coc-status`
-"TODO manage to integrate this with airline/your future *line plugin.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CocList
@@ -131,7 +137,6 @@ nnoremap <silent> <leader>zp  :<C-u>CocListResume<CR>
 " => Autocommands
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Highlight symbol under cursor on CursorHold
-"TODO realise what this does
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 augroup mygroup
@@ -153,11 +158,22 @@ function! s:check_back_space() abort
 endfunction
 
 
+let g:help_win_id = -1
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
     else
         call CocAction('doHover')
+        " TODO remove this if a way to close help floating windows is found.
+        wincmd p
+        let g:help_win_id = win_getid()
+        wincmd p
     endif
 endfunction
 
+
+function! CloseHelpWin()
+    if (1 == win_gotoid(g:help_win_id))
+        quit
+    endif
+endfunction

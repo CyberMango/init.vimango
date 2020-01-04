@@ -7,7 +7,7 @@ endif
 "let g:airline_left_sep = '▙'
 "let g:airline_right_sep = '▜'
 let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = ''
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = 'ρ'
@@ -31,3 +31,6 @@ let g:airline#extensions#tabline#right_alt_sep = '╲'
 
 " Dont show the useless 'tab' label on the left of the tabline.
 let g:airline#extensions#tabline#show_tab_type = 0
+
+" Coc
+let g:airline#extensions#coc#enabled = 1

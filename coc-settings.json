@@ -1,6 +1,7 @@
 {
     "suggest.minTriggerInputLength": 2,
     "suggest.snippetIndicator": "►",
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
 
     "languageserver": {
         "ccls": {

@@ -36,7 +36,7 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-nnoremap <silent> <c-[> :noh<cr>
+nnoremap <silent> <c-[> <esc>:noh<cr>
 
 " Easy copy-paste between different vim sessions
 inoremap <c-c> <nop>
@@ -190,12 +190,14 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 nnoremap gb :ls<CR>:b<space>
 nnoremap <PageUp> :bnext<cr>
 nnoremap <PageDown> :bprevious<cr>
+nnoremap <leader>bn :bnext<cr>
+nnoremap <leader>bp :bprevious<cr>
 nnoremap <leader>bs :ls<cr>:sb<space>
 nnoremap <leader>bv :ls<cr>:vert sb<space>
 
 " Closing buffers.
 nnoremap <leader>bd :ls<cr>:bdelete<space>
-nnoremap <silent> <leader>ba :w<cr>:%bd<cr><c-o>:bd#<cr>
+nnoremap <silent> <leader>bo :w<cr>:tabonly<cr>:%bd<cr><c-o>:bd#<cr>
 
 """ Tabpages
 " Enable switching to last-active tab
@@ -240,14 +242,14 @@ map 9 ^
 
 " Move a line of text using ctrl+alt+arrow
 " TODO when you move to a better terminal than cmder, change these to m-h/j/k/l or c-m-h/j/k/l
-nnoremap <C-m-down> mz:m+<cr>`z
-nnoremap <C-m-up> mz:m-2<cr>`z
-vnoremap <C-m-down> :m'>+<cr>`<my`>mzgv`yo`z
-vnoremap <C-m-up> :m'<-2<cr>`>my`<mzgv`yo`z
-nnoremap <C-m-right> >>
-nnoremap <C-m-left> <<
-vnoremap <C-m-right> >gv4l
-vnoremap <C-m-left> <gv4h
+nnoremap <m-j> mz:m+<cr>`z
+nnoremap <m-k> mz:m-2<cr>`z
+vnoremap <m-j> :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <m-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <m-l> >>
+nnoremap <m-h> <<
+vnoremap <m-l> >gv4l
+vnoremap <m-h> <gv4h
 
 " Allow paste and undo in insert mode
 inoremap <c-u> <esc>ua
