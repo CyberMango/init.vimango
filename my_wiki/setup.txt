@@ -1,0 +1,18 @@
+- Setup defx:
+    - Get nvim python3 support:
+        install python3.
+        install pynvim (pip install pynvim).
+
+- Setup Coc:
+    - Get nvim node.js support:
+        install node.js and npm
+        intall neovim from npm (npm install neovim)
+
+    - Set language servers:
+        - ccls: after installation, add the ccls executable to PATH (symlink it
+                to /usr/bin).
+            Used for:
+                - c,cpp completion with coc.
+
+    - Download extensions (:CocInstall <ext name>):
+        - coc-list: for file fuzzy finding, and other fuzzy finding lists.

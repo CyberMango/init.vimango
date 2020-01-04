@@ -1,6 +1,8 @@
 {
     "suggest.minTriggerInputLength": 2,
     "suggest.snippetIndicator": "►",
+    "suggest.maxCompleteItemCount": 8,
+    "suggest.labelMaxLength": 40,
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
 
     "languageserver": {

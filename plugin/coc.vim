@@ -118,7 +118,6 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 " Show all diagnostics
 nnoremap <silent> <leader>za  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-" TODO i might not need a shortcut for this.
 nnoremap <silent> <leader>ze  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <leader>zc  :<C-u>CocList commands<cr>
@@ -132,6 +131,8 @@ nnoremap <silent> <leader>zj  :<C-u>CocNext<CR>
 nnoremap <silent> <leader>zk  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>zp  :<C-u>CocListResume<CR>
+" Find files in cwd.
+nnoremap <silent> <leader>zf  :<C-u>CocList files<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocommands
