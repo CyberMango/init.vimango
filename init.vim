@@ -250,11 +250,12 @@ nnoremap <m-h> <<
 vnoremap <m-l> >gv4l
 vnoremap <m-h> <gv4h
 
-" Allow paste and undo in insert mode
+" Allow paste and undo in insert and visual mode.
+vnoremap <c-u> <esc>u
 inoremap <c-u> <esc>ua
 inoremap <c-v> <c-g>u<esc>pa<c-g>u
 
-" Make Y yank to end of line (much like C and D)
+" Make Y yank to end of line (much like C and D).
 nnoremap Y y$
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

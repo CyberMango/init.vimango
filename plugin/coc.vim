@@ -113,24 +113,26 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CocList
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Show all diagnostics
+" Show all diagnostics.
 nnoremap <silent> <leader>za  :<C-u>CocList diagnostics<cr>
-" Manage extensions
+" Manage extensions.
 nnoremap <silent> <leader>ze  :<C-u>CocList extensions<cr>
-" Show commands
+" Show commands.
 nnoremap <silent> <leader>zc  :<C-u>CocList commands<cr>
-" Find symbol of current document
+" Find symbol of current document.
 nnoremap <silent> <leader>zo  :<C-u>CocList outline<cr>
-" Search workspace symbols
+" Search workspace symbols.
 nnoremap <silent> <leader>zs  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
+" Do default action for next item in the last list.
 nnoremap <silent> <leader>zj  :<C-u>CocNext<CR>
-" Do default action for previous item.
+" Do default action for previous item in the last list.
 nnoremap <silent> <leader>zk  :<C-u>CocPrev<CR>
-" Resume latest coc list
+" Resume latest coc list.
 nnoremap <silent> <leader>zp  :<C-u>CocListResume<CR>
 " Find files in cwd.
 nnoremap <silent> <leader>zf  :<C-u>CocList files<CR>
+" List all errors (bugs).
+nnoremap <silent> <leader>zb :<C-u>CocList locationlist<CR>
 " Find buffers.
 "TODO map <c-s> and <c-v> to open with splits.
 nnoremap <silent> <leader>bz  :<C-u>CocList buffers<CR>
