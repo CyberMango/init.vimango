@@ -7,20 +7,16 @@ Main guidelines:
   - Highly Documented and well organized.
   - Portable - everything is in a single directories tree!
   - Follows most of /r/vim's best practices guide.
-  - A minimal number of plugins.
+  - Minimizing the number of plugins:
+    - No unused plugins.
+    - No duplicate plugins.
+    - Prefer bultin features over plugins when results are similar.
 
 Features:
   - Summaries of great vim-related articles in my_wiki.
   - Language specific supports: cpp, python.
   - Easy use of tabpages, buffers and windows. Each used the way it was meant to be.
-
-TODOs:
-  - setup coc.nvim:
-    * cpp lsp with ccls.
-    * python lsp with kite.
-    * fuzzy finding with coclists.
-  - reinstall ultisnips and make it integrate with coc.
-  - cleanup YCM and ListToggle.
+  - Useful, efficient and consistent shortcuts for many actions.
 
 Future TODOs:
   - replace Defx with a better file explorer (maybe coc-explorer or tree.nvim when either is ready).
