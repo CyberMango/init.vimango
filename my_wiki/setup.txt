@@ -17,3 +17,8 @@
     - Download extensions (:CocInstall <ext name>):
         - coc-lists: for file fuzzy finding, and other fuzzy finding lists.
         - coc-ultisnips: for completion integration with the real ultisnips plugin.
+
+- Setup gruvbox8:
+    - copy the colors dir to init.vim's dir.
+    - put this: 'let g:gruvbox_italics = 0' at the end of $VIMRUNTIME/syntax/syntax.vim.
+        This is to cancel italics which make the terminal a bit slower i think (just a feeling).

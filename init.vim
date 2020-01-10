@@ -117,7 +117,7 @@ colorscheme gruvbox8_hard
 " Set background (only needed for vim).
 set background=dark
 
-" @@@@ Add this to the end of $VIMRUNTIMEPATH/syntax/syntax.vim
+" @@@@ Add this to the end of $VIMRUNTIME/syntax/syntax.vim
 "let g:gruvbox_italics = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
