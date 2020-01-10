@@ -240,7 +240,7 @@ set laststatus=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map 9 ^
 
-" Move a line of text using ctrl+alt+arrow
+" Move lines of text using ctrl+alt+h/j/k/l.
 nnoremap <c-m-j> mz:m+<cr>`z
 nnoremap <c-m-k> mz:m-2<cr>`z
 vnoremap <c-m-j> :m'>+<cr>`<my`>mzgv`yo`z
