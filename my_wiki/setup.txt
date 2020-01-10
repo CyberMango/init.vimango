@@ -16,3 +16,4 @@
 
     - Download extensions (:CocInstall <ext name>):
         - coc-lists: for file fuzzy finding, and other fuzzy finding lists.
+        - coc-ultisnips: for completion integration with the real ultisnips plugin.

@@ -128,6 +128,7 @@ set smarttab
 " 1 tab = 4 spaces
 set shiftwidth=4
 set tabstop=4
+set softtabstop=4
 
 set autoindent
 
@@ -241,14 +242,14 @@ set laststatus=2
 map 9 ^
 
 " Move lines of text using ctrl+alt+h/j/k/l.
-nnoremap <c-m-j> mz:m+<cr>`z
-nnoremap <c-m-k> mz:m-2<cr>`z
-vnoremap <c-m-j> :m'>+<cr>`<my`>mzgv`yo`z
-vnoremap <c-m-k> :m'<-2<cr>`>my`<mzgv`yo`z
-nnoremap <c-m-l> >>
-nnoremap <c-m-h> <<
-vnoremap <c-m-l> >gv4l
-vnoremap <c-m-h> <gv4h
+nnoremap <m-s-j> mz:m+<cr>`z
+nnoremap <m-s-k> mz:m-2<cr>`z
+vnoremap <m-s-j> :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <m-s-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <m-s-l> >>
+nnoremap <m-s-h> <<
+vnoremap <m-s-l> >gv4l
+vnoremap <m-s-h> <gv4h
 
 " Allow paste and undo in insert and visual mode.
 vnoremap <c-u> <esc>u
@@ -384,6 +385,9 @@ if has('nvim')
 
     " LSP.
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+    " Snippets
+    Plug 'sirver/UltiSnips'
 
     " Colorschemes.
     Plug 'lifepillar/vim-gruvbox8'
