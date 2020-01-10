@@ -12,7 +12,7 @@
             "rootPatterns": [".git/", ".ccls-root", "compile_commands.json"],
             "initializationOptions": {
                 "cache": {
-                    "directory": "/tmp/ccls"
+                    "directory": ".ccls-cache"
                 }
             }
         }

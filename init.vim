@@ -21,17 +21,17 @@ set number
 set nowrap
 let mapleader = ' '
 
-" Scroll page with 1 line space
+" Scroll page with 1 line space.
 set so=1
 
-" Number of commands to remember
+" Number of commands to remember.
 set history=500
 
-" Enable filetype plugins
+" Enable filetype plugins.
 filetype plugin on
 filetype indent on
 
-" Search related configurations
+" Search related configurations.
 set ignorecase
 set smartcase
 set incsearch
@@ -240,15 +240,15 @@ set laststatus=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map 9 ^
 
-" Move a line of text using ctrl+alt+arrow
-nnoremap <m-j> mz:m+<cr>`z
-nnoremap <m-k> mz:m-2<cr>`z
-vnoremap <m-j> :m'>+<cr>`<my`>mzgv`yo`z
-vnoremap <m-k> :m'<-2<cr>`>my`<mzgv`yo`z
-nnoremap <m-l> >>
-nnoremap <m-h> <<
-vnoremap <m-l> >gv4l
-vnoremap <m-h> <gv4h
+" Move lines of text using ctrl+alt+h/j/k/l.
+nnoremap <c-m-j> mz:m+<cr>`z
+nnoremap <c-m-k> mz:m-2<cr>`z
+vnoremap <c-m-j> :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <c-m-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <c-m-l> >>
+nnoremap <c-m-h> <<
+vnoremap <c-m-l> >gv4l
+vnoremap <c-m-h> <gv4h
 
 " Allow paste and undo in insert and visual mode.
 vnoremap <c-u> <esc>u
