@@ -394,6 +394,7 @@ if has('nvim')
 
     " Statusline/Tabline manager.
     Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
     call plug#end()
 endif
 

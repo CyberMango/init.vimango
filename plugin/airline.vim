@@ -3,6 +3,9 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
+" Theme
+let g:airline_theme='base16_gruvbox_dark_hard'
+
 " airline symbols
 "let g:airline_left_sep = '▙'
 "let g:airline_right_sep = '▜'

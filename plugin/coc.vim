@@ -54,8 +54,6 @@ nmap <silent> ge <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window (Or :help for vim keywords).
-"TODO find out how to close it without just moving out of the symbol.
-" ask this on gitter
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 " Close a help floating window.
 nmap <silent> <c-[> <esc>:noh<cr><Plug>(coc-float-hide)
@@ -95,7 +93,6 @@ nmap <silent> <C-d> <Plug>(coc-range-select)
 xmap <silent> <C-d> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer.
-"TODO config .clang-format to your conventions.
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` to fold current buffer.
