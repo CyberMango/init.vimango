@@ -15,4 +15,4 @@
                 - c,cpp completion with coc.
 
     - Download extensions (:CocInstall <ext name>):
-        - coc-list: for file fuzzy finding, and other fuzzy finding lists.
+        - coc-lists: for file fuzzy finding, and other fuzzy finding lists.

@@ -175,9 +175,9 @@ set hidden
 set path=.,**
 
 " Use :f, :sf and :vf as shortcuts for using :find
-abbreviate f find
-abbreviate sf sfind
-abbreviate vf vert sfind
+cnoreabbre f find
+cnoreabbre sf sfind
+cnoreabbre vf vert sfind
 "TODO add shortcuts (not commands) for :find,:sfind and :vert sfind
 
 " Use existing buffers in the current tab if already open.
