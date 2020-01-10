@@ -21,17 +21,17 @@ set number
 set nowrap
 let mapleader = ' '
 
-" Scroll page with 1 line space
+" Scroll page with 1 line space.
 set so=1
 
-" Number of commands to remember
+" Number of commands to remember.
 set history=500
 
-" Enable filetype plugins
+" Enable filetype plugins.
 filetype plugin on
 filetype indent on
 
-" Search related configurations
+" Search related configurations.
 set ignorecase
 set smartcase
 set incsearch
