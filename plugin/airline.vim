@@ -37,3 +37,7 @@ let g:airline#extensions#tabline#show_tab_type = 0
 
 " Coc
 let g:airline#extensions#coc#enabled = 0
+
+" Dont Show current function using tags. You dont even use tags, and it slows
+" you down for no gain.
+let g:airline#extensions#tagbar#enabled = 0
