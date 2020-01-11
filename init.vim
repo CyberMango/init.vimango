@@ -273,6 +273,9 @@ if has('nvim')
     autocmd TermOpen * setlocal nonumber
 endif
 
+" Basic debugging with gdb inside of vim.
+command! -nargs=1 GDB packadd termdebug | Termdebug <args>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -396,7 +399,7 @@ if has('nvim')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
-    " Command mode readline shortcuts.
+    " Command mode readline shortcuts (like c-a and c-e).
     Plug 'ryvnf/readline.vim'
     call plug#end()
 endif
