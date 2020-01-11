@@ -395,6 +395,9 @@ if has('nvim')
     " Statusline/Tabline manager.
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+
+    " Command mode readline shortcuts.
+    Plug 'ryvnf/readline.vim'
     call plug#end()
 endif
 
