@@ -20,6 +20,7 @@
 set number
 set nowrap
 let mapleader = ' '
+let vim_dir = '$HOME/.config/nvim'
 
 " Scroll page with 1 line space.
 set so=1
@@ -258,6 +259,11 @@ inoremap <c-v> <c-g>u<esc>pa<c-g>u
 
 " Make Y yank to end of line (much like C and D).
 nnoremap Y y$
+
+" Allow undoing changes after reopenning a file.sdfsdfsd
+set undofile
+set undolevels=1000
+set undoreload=10000
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Integrated terminal settings
