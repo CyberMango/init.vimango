@@ -403,7 +403,7 @@ if has('nvim')
     Plug 'ryvnf/readline.vim'
 
     " Auto close pairs.
-    Plug 'jiangmiao/auto-pairs'
+    Plug 'cohama/lexima.vim'
     call plug#end()
 endif
 

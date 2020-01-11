@@ -3,8 +3,13 @@
     "suggest.snippetIndicator": "►",
     "suggest.maxCompleteItemCount": 8,
     "suggest.labelMaxLength": 40,
+
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "coc.source.ultisnips.priority": 9999,
+
+    "list.source.files.excludePatterns": ["**/.git/**", "**/.ccls-cache/**"],
+
+    "diagnostic.warningSign": "!",
 
     "languageserver": {
         "ccls": {
