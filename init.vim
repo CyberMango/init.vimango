@@ -401,6 +401,9 @@ if has('nvim')
 
     " Command mode readline shortcuts (like c-a and c-e).
     Plug 'ryvnf/readline.vim'
+
+    " Auto close pairs.
+    Plug 'jiangmiao/auto-pairs'
     call plug#end()
 endif
 
