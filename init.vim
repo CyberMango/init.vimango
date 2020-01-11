@@ -136,8 +136,8 @@ set autoindent
 "TODO check if this really needs to be in an autocmd
 autocmd FileType * setlocal formatoptions-=r formatoptions-=o
 
-" Remove trailing whitespace on save
-autocmd BufWritePre * %s/\s\+$//e
+" Remove trailing whitespace on save (But I now have a smart plugin for it).
+"autocmd BufWritePre * %s/\s\+$//e
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -404,6 +404,9 @@ if has('nvim')
 
     " Auto close pairs.
     Plug 'cohama/lexima.vim'
+
+    " Smart way to remove trailing whitespace.
+    Plug 'axelf4/vim-strip-trailing-whitespace'
     call plug#end()
 endif
 
