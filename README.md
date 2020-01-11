@@ -11,6 +11,7 @@ Main guidelines:
     - No unused plugins.
     - No duplicate plugins.
     - Prefer builtin features over plugins when results are similar.
+  - Scaleable: No features that only work for small code bases and break or become unuseable for bigger ones.
 
 Features:
   - Summaries of great vim-related articles in my_wiki.
