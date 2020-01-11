@@ -10,7 +10,7 @@ Main guidelines:
   - Minimizing the number of plugins:
     - No unused plugins.
     - No duplicate plugins.
-    - Prefer bultin features over plugins when results are similar.
+    - Prefer builtin features over plugins when results are similar.
 
 Features:
   - Summaries of great vim-related articles in my_wiki.
