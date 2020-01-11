@@ -11,6 +11,9 @@
     - Set language servers:
         - ccls: after installation, add the ccls executable to PATH (symlink it
                 to /usr/bin).
+            Installation problems: on WSL, you might need to install some or all of the following:
+                libclang-8-dev, zlib1g-dev, libncurses-dev, rapidjson-dev, libclang-dev, llvm-8,
+                llvm-8-tools, llvm-8-runtime.
             Used for:
                 - c,cpp completion with coc.
 
