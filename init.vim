@@ -260,7 +260,7 @@ inoremap <c-v> <c-g>u<esc>pa<c-g>u
 " Make Y yank to end of line (much like C and D).
 nnoremap Y y$
 
-" Allow undoing changes after reopenning a file.sdfsdfsd
+" Allow undoing changes after reopenning a file.
 set undofile
 set undolevels=1000
 set undoreload=10000
