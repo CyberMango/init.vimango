@@ -9,6 +9,7 @@
 " => Editing mappings
 " => Integrated terminal settings
 " => Spell checking
+" => Software developement related
 " => Helper functions
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -37,7 +38,10 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-nnoremap <silent> <c-[> <esc>:noh<cr>
+" For some reason this gets messed up in vim.
+if has('nvim')
+    nnoremap <silent> <c-[> <esc>:noh<cr>
+endif
 
 " Easy copy-paste between different vim sessions
 inoremap <c-c> <nop>
@@ -100,7 +104,7 @@ autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 autocmd! bufwritepost $VIMD/plugin/* source %
 
 " Allow mouse control in normal, visual and command modes.
-set mouse=nvc
+"set mouse=nvc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors, Fonts, ...
@@ -265,6 +269,10 @@ set undofile
 set undolevels=1000
 set undoreload=10000
 
+" Auto expand brackets.
+inoremap {<cr> {<cr><c-g>u}<esc>O
+inoremap (<cr> (<cr><c-g>u)<esc>O
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Integrated terminal settings
 " * In these mappings, s stands for shell.
@@ -275,12 +283,11 @@ if has('nvim')
     " Move around the terminal in a way compatible with tmux.
     tnoremap <c-b>[ <c-\><c-n>
     tnoremap <c-b><c-[> <c-\><c-n>
+    tnoremap <silent> <c-b>x <c-\><c-n>:bd!<cr>
 
     autocmd TermOpen * setlocal nonumber
+    autocmd TermOpen * nnoremap <buffer><silent> Q :bd!<cr>
 endif
-
-" Basic debugging with gdb inside of vim.
-command! -nargs=1 GDB packadd termdebug | Termdebug <args>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -293,6 +300,18 @@ map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Software developement related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Basic debugging with gdb inside of vim.
+command! -nargs=1 GDB packadd termdebug | Termdebug <args>
+
+" Shortcuts for using the quickfix list (used by :make and other commands).
+nnoremap <leader>co :copen<cr>
+nnoremap <leader>cc :cclose<cr>
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cp :cprevious<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
@@ -408,8 +427,8 @@ if has('nvim')
     " Command mode readline shortcuts (like c-a and c-e).
     Plug 'ryvnf/readline.vim'
 
-    " Auto close pairs.
-    Plug 'cohama/lexima.vim'
+    " Auto close pairs. This is the best one, but it still doesnt suffice.
+    "Plug 'cohama/lexima.vim'
 
     " Smart way to remove trailing whitespace.
     Plug 'axelf4/vim-strip-trailing-whitespace'

@@ -11,6 +11,15 @@
 
     "diagnostic.warningSign": "!",
 
+    "python.setInterpreter": "python3",
+    "python.linting.enabled": true,
+    "python.jediEnabled": false,
+    "python.analysis.openFilesOnly": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.pydocstyleEnabled": true,
+    "python.formatting.provider": "yapf",
+
     "languageserver": {
         "ccls": {
             "command": "ccls",

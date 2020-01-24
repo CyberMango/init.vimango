@@ -1,0 +1,3 @@
+:<range>norm[al] {commands}
+    execute normal mode commands on range. like :%norm A, to add , at the end of all the lines in
+    the file.

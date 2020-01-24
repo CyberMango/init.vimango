@@ -49,8 +49,8 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " Keys for gotos.
 " Add any filetype with an lsp to this au.
 autocmd FileType c,cpp nmap <silent> gd <Plug>(coc-declaration)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> ge <Plug>(coc-definition)
+nmap <silent> gw <Plug>(coc-type-definition)
+nmap <silent> gy <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window (Or :help for vim keywords).
@@ -111,28 +111,28 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 " => CocList
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show all diagnostics.
-nnoremap <silent> <leader>za  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>fa  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <leader>ze  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>fe  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent> <leader>zc  :<C-u>CocList commands<cr>
+nnoremap <silent> <leader>fc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent> <leader>zo  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>fo  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent> <leader>zs  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>fs  :<C-u>CocList -I symbols<cr>
 " Do default action for next item in the last list.
-nnoremap <silent> <leader>zj  :<C-u>CocNext<CR>
+nnoremap <silent> <leader>fj  :<C-u>CocNext<CR>
 " Do default action for previous item in the last list.
-nnoremap <silent> <leader>zk  :<C-u>CocPrev<CR>
+nnoremap <silent> <leader>fk  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent> <leader>zp  :<C-u>CocListResume<CR>
+nnoremap <silent> <leader>fp  :<C-u>CocListResume<CR>
 " Find files in cwd.
-nnoremap <silent> <leader>zf  :<C-u>CocList files<CR>
+nnoremap <silent> <leader>ff  :<C-u>CocList files<CR>
 " List all errors (bugs).
-nnoremap <silent> <leader>zb :<C-u>CocList locationlist<CR>
+nnoremap <silent> <leader>fb :<C-u>CocList locationlist<CR>
 " Find buffers.
 "TODO map <c-s> and <c-v> to open with splits.
-nnoremap <silent> <leader>bz  :<C-u>CocList buffers<CR>
+nnoremap <silent> <leader>bf  :<C-u>CocList buffers<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocommands

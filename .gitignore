@@ -1,3 +1,5 @@
 .netrwhist
 vim_plug/*
 language_servers/*
+*~
+.ccls-cache/*

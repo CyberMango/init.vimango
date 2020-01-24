@@ -17,9 +17,14 @@
             Used for:
                 - c,cpp completion with coc.
 
+        - MPLS: install the extension coc-python.
+            After that, if you just open vim coc will prompt you to download the linters. its better
+                to do it yourself. just pip3 install {flake8,pydocstyle,mypy,yapf}.
+
     - Download extensions (:CocInstall <ext name>):
         - coc-lists: for file fuzzy finding, and other fuzzy finding lists.
         - coc-ultisnips: for completion integration with the real ultisnips plugin.
+        - coc-python: for the MPLS lsp for python.
 
 - Setup gruvbox8:
     - copy the colors dir to init.vim's dir.
