@@ -1,5 +1,5 @@
-setlocal path+=/usr/lib/python3.6/**
-setlocal path+=~/.local/lib/python3.6/site-packages/**
+setlocal path+=/usr/lib/python*/**
+setlocal path+=~/.local/lib/**/site-packages/**
 
 " Allow openning ipython easily.
 nnoremap <buffer><silent> <leader>ti <c-w>s:terminal<cr>iipython<cr><c-l>

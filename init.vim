@@ -114,11 +114,14 @@ syntax on
 
 set termguicolors
 
+" Enable doxygen syntax highlighting for c, cpp, PHP, IDL files.
+let g:load_doxygen_syntax=1
+
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 
 " Chosen colorscheme
-colorscheme gruvbox8_hard
+colorscheme gruvbox8
 " Set background (only needed for vim).
 set background=dark
 
@@ -137,9 +140,9 @@ set softtabstop=4
 
 set autoindent
 
-" Dont auto comment when going down a line in a comment with enter or O/o.
-"TODO check if this really needs to be in an autocmd
-autocmd FileType * setlocal formatoptions-=r formatoptions-=o
+" Dont auto comment when going down a line in a comment with enter or O/o
+" (needs to be specifically set for some file types due to ftplugins).
+set formatoptions-=r formatoptions-=o
 
 " Remove trailing whitespace on save (But I now have a smart plugin for it).
 "autocmd BufWritePre * %s/\s\+$//e
@@ -292,10 +295,10 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing <leader>ss will toggle and untoggle spell checking
+" Pressing <leader>ss will toggle spell checking.
 map <leader>ss :setlocal spell!<cr>
 
-" Shortcuts using <leader>
+" Shortcuts using <leader> .
 map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
@@ -399,6 +402,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Automatically download vimplug if its not present.
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -432,6 +436,14 @@ if has('nvim')
 
     " Smart way to remove trailing whitespace.
     Plug 'axelf4/vim-strip-trailing-whitespace'
+
+    " Enable editting files as root after openning them. use :SudaRead to edit
+    " and :SudaWrite to save.
+    Plug  'lambdalisue/suda.vim'
+
+    " Auto Doxygen doc with :Dox.
+    Plug 'vim-scripts/DoxygenToolkit.vim'
+
     call plug#end()
 endif
 

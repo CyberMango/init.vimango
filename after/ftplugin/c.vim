@@ -3,3 +3,4 @@ setlocal cindent
 
 set path+=/usr/include
 
+"setlocal formatoptions-=r formatoptions-=o
