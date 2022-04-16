@@ -415,9 +415,6 @@ if has('nvim')
     " File explorer.
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
-    " LSP.
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
     " Snippets
     Plug 'sirver/UltiSnips'
 
