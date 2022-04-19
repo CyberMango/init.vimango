@@ -121,7 +121,7 @@ let g:load_doxygen_syntax=1
 set encoding=utf8
 
 " Chosen colorscheme
-colorscheme gruvbox8
+colorscheme gruvbox
 " Set background (only needed for vim).
 set background=dark
 
