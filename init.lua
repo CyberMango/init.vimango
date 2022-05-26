@@ -10,7 +10,7 @@
 -- <9>  Spell checking
 -- <10> Software developement related
 -- <11> Helper functions
--- <12> Plugins
+-- <12> Config Scripts
 -----------------------------------------]]
 
 -----------------------------------------
@@ -19,10 +19,8 @@
 -- Use this to make it easier to move settings from vim.o to vim.opt if you swap the two.
 local set = vim.o
 
---TODO temp mappings
-vim.keymap.set('n', '<c-m-l>', '0f=i<space><esc>la<space><esc>', {silent = true}) --turn X=123 to X = 123
-vim.keymap.set('n', '<c-m-k>', '0xxxelr.<c-m-l>', {silent = true, remap=true}) --turn -- set number=true to set.number = true
-vim.keymap.set('n', '<c-m-j>', '0cwvim.keymap.set(\'<esc>la\',<space><esc>lcw\'<esc>Ea\',<esc>la\'<esc>A\')<esc>')-- turn vim noremaps into lua keymap.set.
+-- init.lua's directory.
+VIMD = vim.env.MYVIMRC:sub(1, -string.len('init.lua') - 2)
 
 -- General
 vim.wo.number = true
@@ -58,7 +56,8 @@ vim.keymap.set('v', '<c-c>x', '"+d')
 vim.keymap.set('v', '<c-c>v', '"+p')
 vim.keymap.set('n', '<c-c>v', '"+p')
 vim.keymap.set('i', '<c-c>v', '<esc>"+pa')
--- Don't redraw while executing macros (good performance config)
+
+-- Don't redraw while executing macros (good performance config).
 set.lazyredraw = true
 
 -- How vim completions work
@@ -78,8 +77,8 @@ set.wildignore = '*.o,*~,*.pyc'
 set.backspace = 'eol,start,indent'
 
 -- Allow left/right to move between lines
-set.whichwrap = set.whichwrap .. '<,>,h,l'
--- 
+--set.whichwrap = set.whichwrap .. '<,>,h,l'
+
 -- For regular expressions turn magic on
 set.magic = true
 
@@ -96,14 +95,24 @@ set.t_vb = ''
 -- wait 500 milliseconds for mappings to complete
 set.timeoutlen = 500
 
--- Reload vim configs when changing them
--- autocmd! bufwritepost $MYVIMRC source $MYVIMRC
--- If you also want to clear previous commands add vim.api.nvim_clear_autocmds({event = 'BufWritePost', pattern = 'init.lua'})
-vim.api.nvim_create_autocmd('BufWritePost', {command = 'source ' .. vim.env.MYVIMRC, pattern = vim.env.MYVIMRC})
-vim.api.nvim_create_autocmd('BufWritePost', {command = 'source <afile>', pattern = vim.env.VIMD .. '/plugin/*'})
+-- Reload vim configs when changing them.
+local reload_configs = vim.api.nvim_create_augroup('reload_configs', {})
+vim.api.nvim_create_autocmd('BufWritePost', {
+    command = 'source <afile>',
+    pattern = {VIMD .. '/*.vim', VIMD .. '/*.lua'},
+    group = reload_configs
+})
 
 -- Allow mouse control in normal, visual and command modes.
 --set.mouse = 'nvc'
+
+-- Make 0 behave like <home> on most editors.
+vim.cmd("nnoremap <expr> <silent> 0 col('.') == match(getline('.'),'\\S')+1 ? '0' : '^'")
+--TODO finish implementing this in lua
+--vim.keymap.set(
+--    'n',
+--    function() vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[1], false)  {expr = true})
+
 
 -----------------------------------------
 -- <2>  Colors, Fonts, ...
@@ -243,18 +252,16 @@ set.laststatus = 2
 -- <7>  Editing mappings
 -----------------------------------------
 -- Move lines of text using alt+shift+h/j/k/l.
-vim.keymap.set('n', '<m-s-j>', 'mz:m+<cr>`z')
-vim.keymap.set('n', '<m-s-k>', 'mz:m-2<cr>`z')
-vim.keymap.set('v', '<m-s-j>', ":m'>+<cr>`<my`>mzgv`yo`z")
-vim.keymap.set('v', '<m-s-k>', ":m'<-2<cr>`>my`<mzgv`yo`z")
-vim.keymap.set('v', '<m-s-l>', '>gv4l')
-vim.keymap.set('v', '<m-s-h>', '<gv4h')
-vim.keymap.set('n', '<m-s-l>', '>>')
-vim.keymap.set('n', '<m-s-h>', '<<')
+vim.keymap.set('n', '<m-j>', 'mz:m+<cr>`z')
+vim.keymap.set('n', '<m-k>', 'mz:m-2<cr>`z')
+vim.keymap.set('v', '<m-j>', ":m'>+<cr>`<my`>mzgv`yo`z")
+vim.keymap.set('v', '<m-k>', ":m'<-2<cr>`>my`<mzgv`yo`z")
+vim.keymap.set('v', '<m-l>', '>gv4l')
+vim.keymap.set('v', '<m-h>', '<gv4h')
+vim.keymap.set('n', '<m-l>', '>>')
+vim.keymap.set('n', '<m-h>', '<<')
 
 -- Allow paste and undo in insert and visual mode.
-vim.keymap.set('v', '<c-u>', '<esc>u')
-vim.keymap.set('i', '<c-u>', '<esc>ua')
 vim.keymap.set('i', '<c-v>', '<c-g>u<esc>pa<c-g>u')
 
 -- Make Y yank to end of line (much like C and D).
@@ -341,5 +348,8 @@ endfunction
 ]]
 
 -----------------------------------------
--- <12> Plugins
+-- <12> Config Scripts
 -----------------------------------------
+-- Plugins
+require('plugins')
+
