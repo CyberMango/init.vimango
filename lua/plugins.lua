@@ -17,6 +17,10 @@ return require('packer').startup(function()
     ]]
     use 'wbthomason/packer.nvim'
 
+    --[[ Basic LSP configurations
+    ]]
+    use 'neovim/nvim-lspconfig'
+
     -- File explorer.
     use {'Shougo/defx.nvim', run = function() vim.fn['UpdateRemotePlugins']() end  }
 

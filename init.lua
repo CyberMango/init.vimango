@@ -21,6 +21,8 @@ local set = vim.o
 
 -- init.lua's directory.
 VIMD = vim.env.MYVIMRC:sub(1, -string.len('init.lua') - 2)
+vim.cmd(string.format("let VIMD = '%s'", VIMD))
+
 
 -- General
 vim.wo.number = true
@@ -30,6 +32,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- Show current position in the file. TODO does this change anything?
 set.ruler = true 
+-- Always show the sign column (the column that marks lines with errors).
+set.signcolumn = "yes"
 -- Scroll page with 1 line space.
 set.scrolloff = 1 
 -- Number of commands to remember.
@@ -319,6 +323,9 @@ vim.keymap.set('n', '<leader>co', ':copen<cr>')
 vim.keymap.set('n', '<leader>cc', ':cclose<cr>')
 vim.keymap.set('n', '<leader>cn', ':cnext<cr>')
 vim.keymap.set('n', '<leader>cp', ':cprevious<cr>')
+-- If quickfix is the last buffer opened, close it.
+-- TODO convert to lua.
+vim.cmd("autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | q | endif")
 
 -----------------------------------------
 -- <11> Helper functions
@@ -350,6 +357,6 @@ endfunction
 -----------------------------------------
 -- <12> Config Scripts
 -----------------------------------------
--- Plugins
+-- Plugins.
 require('plugins')
 
