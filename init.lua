@@ -119,9 +119,9 @@ vim.cmd("nnoremap <expr> <silent> 0 col('.') == match(getline('.'),'\\S')+1 ? '0
 --    function() vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[1], false)  {expr = true})
 
 --TODO this makes sure files are opened unfolded. Find a better way.
-local general_au_group = vim.api.nvim_create_augroup('general_au_group', {})
-vim.api.nvim_create_autocmd('BufReadPost', {
-    command = 'normal zR',
+local general_au_group = vim.api.nvim_create_augroup("general_au_group", {})
+vim.api.nvim_create_autocmd("BufReadPost", {
+    command = "normal zR",
     group = general_au_group
 })
 
@@ -130,9 +130,9 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 -----------------------------------------
 set.termguicolors = true
 -- Set utf8 as standard encoding and en_US as the standard language
-set.encoding = 'utf8'
--- Chosen colorscheme
-vim.cmd('colorscheme vscode')
+set.encoding = "utf8"
+-- Chosen colorscheme. Called in an error safe way.
+pcall(vim.cmd, "colorscheme vscode")
  
 -----------------------------------------
 -- <3>  Text, tab and indent related
