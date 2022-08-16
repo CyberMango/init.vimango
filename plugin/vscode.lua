@@ -12,9 +12,9 @@ if "vscode" == vim.g.colors_name then
         -- disable_nvimtree_bg = true,
 
         -- Override colors (see ./lua/vscode/colors.lua)
-        -- color_overrides = {
-        --     vscLineNumber = "#aa22aa",
-        -- },
+        color_overrides = {
+            vscLineNumber = "#8A8A8A",
+        },
 
         -- Override highlight groups (see ./lua/vscode/theme.lua)
         -- group_overrides = {
