@@ -1,16 +1,16 @@
---[[ Table of contents:
--- <1>  General and UI configs
--- <2>  Colors, Fonts, ...
--- <3>  Text, tab and indent related
--- <4>  Visual mode related
--- <5>  Tabpages, windows and buffers
--- <6>  Status line
--- <7>  Editing mappings
--- <8>  Integrated terminal settings
--- <9>  Spell checking
--- <10> Software developement related
--- <11> Helper functions
--- <12> Config Scripts
+--[[Table of contents:
+    <1>  General and UI configs
+    <2>  Colors, Fonts, ...
+    <3>  Text, tab and indent related
+    <4>  Visual mode related
+    <5>  Tabpages, windows and buffers
+    <6>  Status line
+    <7>  Editing mappings
+    <8>  Integrated terminal settings
+    <9>  Spell checking
+    <10> Software developement related
+    <11> Helper functions
+    <12> Config Scripts
 -----------------------------------------]]
 
 -----------------------------------------
@@ -118,15 +118,17 @@ vim.cmd("nnoremap <expr> <silent> 0 col('.') == match(getline('.'),'\\S')+1 ? '0
 --    'n',
 --    function() vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[1], false)  {expr = true})
 
+--TODO this makes sure files are opened unfolded. Find a better way.
+local general_au_group = vim.api.nvim_create_augroup('general_au_group', {})
+vim.api.nvim_create_autocmd('BufReadPost', {
+    command = 'normal zR',
+    group = general_au_group
+})
 
 -----------------------------------------
 -- <2>  Colors, Fonts, ...
 -----------------------------------------
--- Enable syntax highlighting
-vim.cmd('syntax on')
 set.termguicolors = true
--- Enable doxygen syntax highlighting for c, cpp, PHP, IDL files.
-vim.g.load_doxygen_syntax = 1
 -- Set utf8 as standard encoding and en_US as the standard language
 set.encoding = 'utf8'
 -- Chosen colorscheme
