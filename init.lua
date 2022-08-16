@@ -22,6 +22,7 @@ local set = vim.o
 -- init.lua's directory.
 VIMD = vim.env.MYVIMRC:sub(1, -string.len('init.lua') - 2)
 vim.cmd(string.format("let VIMD = '%s'", VIMD))
+vim.cmd(string.format("let $VIMD = '%s'", VIMD))
 
 
 -- General
@@ -129,7 +130,7 @@ vim.g.load_doxygen_syntax = 1
 -- Set utf8 as standard encoding and en_US as the standard language
 set.encoding = 'utf8'
 -- Chosen colorscheme
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme vscode')
  
 -----------------------------------------
 -- <3>  Text, tab and indent related

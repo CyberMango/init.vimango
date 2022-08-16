@@ -37,6 +37,11 @@ return require('packer').startup(function()
     -- Command mode readline shortcuts (like c-a and c-e).
     use 'linty-org/readline.nvim'
 
+    -- Colorschemes with treesitter support!
+    use 'sainnhe/gruvbox-material'
+    use 'luisiacc/gruvbox-baby'
+    use 'Mofiqul/vscode.nvim'
+
     --    " Snippets
     --    Plug 'sirver/UltiSnips'
 

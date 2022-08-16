@@ -3,3 +3,4 @@ vim_plug/*
 language_servers/*
 *~
 .ccls-cache/*
+plugin/packer_compiled.lua
