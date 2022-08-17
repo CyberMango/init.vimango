@@ -14,6 +14,8 @@ if "vscode" == vim.g.colors_name then
         -- Override colors (see ./lua/vscode/colors.lua)
         color_overrides = {
             vscLineNumber = "#8A8A8A",
+            -- Changes the line number color for the cursor line.
+            vscPopupFront = "#dddddd",
         },
 
         -- Override highlight groups (see ./lua/vscode/theme.lua)

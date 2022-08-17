@@ -35,9 +35,9 @@ return require("packer").startup(function()
     -- File explorer.
     --TODO understand why the config command doenst work for this plugin.
     use({"Shougo/defx.nvim", run = ":UpdateRemotePlugins",
-        config = function () vim.cmd("source plugin_config/defx.vim") end})
+        config = function () vim.cmd("source $VIMD/lua/plugin_config/defx.vim") end})
     --TODO remove when issue fixed.
-    vim.cmd("source plugin_config/defx.vim")
+    vim.cmd("source $VIMD/lua/plugin_config/defx.vim")
 
     -- Smart way to remove trailing whitespace.
     use("axelf4/vim-strip-trailing-whitespace")
@@ -49,7 +49,7 @@ return require("packer").startup(function()
 
     -- Auto Doxygen doc with :Dox.
     use({"vim-scripts/DoxygenToolkit.vim",
-        config = function () vim.cmd("source plugin_config/DoxygenToolkit.vim") end})
+        config = function () vim.cmd("source $VIMD/lua/plugin_config/DoxygenToolkit.vim") end})
 
     -- Command mode readline shortcuts (like c-a and c-e).
     use({"linty-org/readline.nvim", config = get_config("readline")})

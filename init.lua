@@ -27,6 +27,7 @@ vim.cmd(string.format("let $VIMD = '%s'", VIMD))
 
 -- General
 vim.wo.number = true
+set.cursorline = true
 vim.wo.wrap = false
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', {silent = true})
 vim.g.mapleader = ' '
@@ -67,7 +68,7 @@ set.lazyredraw = true
 
 -- How vim completions work
 set.completeopt = longest,menuone,preview
- 
+
 -- Set wildmenu (autocompletions in command line).
 set.wildmenu = true
 set.wildmode = 'longest,full'
