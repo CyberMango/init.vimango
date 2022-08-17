@@ -67,20 +67,20 @@ vim.keymap.set('i', '<c-c>v', '<esc>"+pa')
 set.lazyredraw = true
 
 -- How vim completions work
-set.completeopt = longest,menuone,preview
+set.completeopt = "longest,menuone,preview"
 
 -- Set wildmenu (autocompletions in command line).
 set.wildmenu = true
-set.wildmode = 'longest,full'
+set.wildmode = "longest,full"
 -- Command prompt completion keystroke is tab (\t).
 set.wildchar = ('\t'):byte()
 -- How to refer to wildchar inside of mappings (26 == ctrl-z).
 set.wildcharm = 26
 -- Ignore compiled files.
-set.wildignore = '*.o,*~,*.pyc'
+set.wildignore = "*.o,*~,*.pyc"
 
 -- Configure backspace so it acts as it should act
-set.backspace = 'eol,start,indent'
+set.backspace = "eol,start,indent"
 
 -- Allow left/right to move between lines
 --set.whichwrap = set.whichwrap .. '<,>,h,l'
