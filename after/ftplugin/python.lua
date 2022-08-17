@@ -2,7 +2,7 @@
 vim.api.nvim_set_option_value('path', vim.o.path .. ',/usr/lib/python*/**', {scope = 'local'})
 vim.api.nvim_set_option_value('path', vim.o.path .. ',~/.local/lib/**/site-packages/**', {scope = 'local'})
 
--- Allow openning ipython easily.
+-- Run ipython with <leader>ti
 vim.keymap.set('n', '<leader>ti', '<c-w>s:terminal<cr>iipython<cr><c-l>', {silent = true, buffer = true})
 
 -- Run main with :make. See output again with :copen. Exists for compatability with cpp commands.

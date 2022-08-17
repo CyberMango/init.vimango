@@ -33,13 +33,13 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', {silent = true})
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- Show current position in the file. TODO does this change anything?
-set.ruler = true 
+set.ruler = true
 -- Always show the sign column (the column that marks lines with errors).
 set.signcolumn = "yes"
 -- Scroll page with 1 line space.
-set.scrolloff = 1 
+set.scrolloff = 1
 -- Number of commands to remember.
-set.history = 500 
+set.history = 500
 
 -- Enable filetype plugins.
 --TODO is this necessary? whats a better way to do this?
@@ -92,7 +92,7 @@ set.magic = true
 set.showmatch = true
 -- How many tenths of a second to blink when matching brackets
 set.mat = 2
--- 
+--
 -- No annoying sound on errors
 set.errorbells = false
 set.visualbell = false
@@ -134,7 +134,7 @@ set.termguicolors = true
 set.encoding = "utf8"
 -- Chosen colorscheme. Called in an error safe way.
 pcall(vim.cmd, "colorscheme vscode")
- 
+
 -----------------------------------------
 -- <3>  Text, tab and indent related
 -----------------------------------------
@@ -362,5 +362,5 @@ endfunction
 -- <12> Config Scripts
 -----------------------------------------
 -- Plugins.
-require('plugins')
+require("packer_config")
 

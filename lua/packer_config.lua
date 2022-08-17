@@ -13,7 +13,7 @@ local function get_config(name)
     return string.format("require('plugin_config/%s')", name)
 end
 
-return require("packer").startup(function()
+return require("packer").startup(function(use)
     --[[Plugin manager:
         :PackerInstall - Clean, then install missing plugins.
         :PackerCompile - Run this whenever you make changes to your plugin
