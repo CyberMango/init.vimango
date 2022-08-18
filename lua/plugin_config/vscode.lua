@@ -14,15 +14,17 @@ if "vscode" == vim.g.colors_name then
         -- Override colors (see ./lua/vscode/colors.lua)
         color_overrides = {
             vscLineNumber = "#8A8A8A",
-            -- Changes the line number color for the cursor line.
-            vscPopupFront = "#dddddd",
         },
 
-        -- Override highlight groups (see ./lua/vscode/theme.lua)
-        -- group_overrides = {
-        --     -- this supports the same val table as vim.api.nvim_set_hl
-        --     -- use colors from this colorscheme by requiring vscode.colors!
-        --     Cursor = { fg=vs_colors.vscDarkBlue, bg=vs_colors.vscLightGreen, bold=true },
-        -- }
+        --[[Override highlight groups (see ./lua/vscode/theme.lua)
+            this supports the same val table as vim.api.nvim_set_hl
+            use colors from this colorscheme by requiring vscode.colors!
+        ]]
+        group_overrides = {
+            -- Changes the line number color for the cursor line.
+            CursorLineNr = { fg = "#dddddd" },
+            -- Makes constants Blue like in vscode (default is yellow).
+            TSConstant = { fg = vs_colors.vscBlue },
+        },
     })
 end

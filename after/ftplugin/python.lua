@@ -12,3 +12,13 @@ vim.api.nvim_set_option_value('makeprg', 'python3 main.py', {scope = 'local'})
 vim.keymap.set('n', '<f5>', '<c-w>s4<c-w>-:terminal<space>python3<space>%<cr>i', {buffer = true})
 -- Run main file in a split window with ctrl-f5.
 vim.keymap.set('n', '<f29>', '<c-w>s4<c-w>-:terminal<space>python3<space>main.py<cr>i', {buffer = true})
+
+--TODO ask if this is the correct way to add colorscheme settings.
+-- Make python constants blue like in VSCode for the vscode colorscheme.
+if "vscode" == vim.g.colors_name then
+    require("vscode").setup({
+        group_overrides = {
+            TSConstant = { fg = "#4fc1ff" },
+        },
+    })
+end
