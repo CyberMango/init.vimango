@@ -211,9 +211,19 @@ vim.cmd('cnoreabbre vf vert sfind')
 set.switchbuf = 'useopen'
 
 -- Return to last edit position when opening files (You want this!).
---TODO fully convert this monster to lua.
-vim.api.nvim_create_autocmd('BufReadPost',
-    { command = [[if line("'\"") > 1 && line("\'\"") <= line("$") | exe "normal! g\'\"" | endif]] })
+vim.api.nvim_create_autocmd("BufReadPost", {
+    callback = function()
+        local fn = vim.fn
+
+        if fn.expand("%:p"):match(".git") and fn.line("'\"") > 1
+            and fn.line("'\"") <= fn.line("$") then
+            return
+        end
+
+        vim.cmd("normal! g'\"")
+        vim.cmd("normal zz")
+    end,
+})
 
 -- Buffer navigation (mostly done with gb. Next/previous is for a lazy mood).
 vim.keymap.set('n', 'gb', ':ls<CR>:b<space>')
