@@ -38,7 +38,7 @@ vim.wo.wrap = false
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- Show current position in the file. TODO does this change anything?
+-- Show current position in the file.
 set.ruler = true
 -- Always show the sign column (the column that marks lines with errors).
 set.signcolumn = "yes"
@@ -57,8 +57,8 @@ set.ignorecase = true
 set.smartcase = true
 set.incsearch = true
 set.hlsearch = true
--- TODO this isnt working
-vim.keymap.set('n', '<c-[>', '<esc>:noh<cr>', { silent = false })
+-- Cancel search highlight on esc press.
+vim.keymap.set('n', '<esc>', '<esc>:noh<cr>', { silent = true })
 
 -- Easy system clipboard copy-paste.
 vim.keymap.set('i', '<c-c>', '<nop>')
