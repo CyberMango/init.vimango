@@ -32,19 +32,18 @@ require("nvim-treesitter.configs").setup({
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = "<leader>v",
+            init_selection = "<leader><tab>",
             -- node_incremental just seems to be better.
-            scope_incremental = "<nop>",
+            scope_incremental = "v",
             node_incremental = "<tab>",
             node_decremental = "<s-tab>",
         },
     },
 
-    --TODO experimental feature. might want to remove this
-    -- Treesitter based indentation with =.
-    indent = {
-        enable = true
-    }
+    -- Treesitter based auto indentation. Experimental and currently worse than default.
+    -- indent = {
+    --     enable = true
+    -- }
 })
 
 vim.o.foldmethod = "expr"

@@ -1,4 +1,5 @@
 --[[Table of contents:
+    <0>  Helper functions
     <1>  General and UI configs
     <2>  Colors, Fonts, ...
     <3>  Text, tab and indent related
@@ -9,9 +10,14 @@
     <8>  Integrated terminal settings
     <9>  Spell checking
     <10> Software developement related
-    <11> Helper functions
-    <12> Config Scripts
+    <11> Config Scripts
 -----------------------------------------]]
+
+-----------------------------------------
+-- <0>  Helper functions
+-----------------------------------------
+local lua_utils = require("lua_utils")
+require("vimscript_utils")
 
 -----------------------------------------
 -- <1>  General and UI configs
@@ -29,7 +35,7 @@ vim.cmd(string.format("let $VIMD = '%s'", VIMD))
 vim.wo.number = true
 set.cursorline = true
 vim.wo.wrap = false
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', {silent = true})
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- Show current position in the file. TODO does this change anything?
@@ -52,7 +58,7 @@ set.smartcase = true
 set.incsearch = true
 set.hlsearch = true
 -- TODO this isnt working
-vim.keymap.set('n', '<c-[>', '<esc>:noh<cr>', {silent = true})
+vim.keymap.set('n', '<c-[>', '<esc>:noh<cr>', { silent = false })
 
 -- Easy system clipboard copy-paste.
 vim.keymap.set('i', '<c-c>', '<nop>')
@@ -96,34 +102,33 @@ set.mat = 2
 -- No annoying sound on errors
 set.errorbells = false
 set.visualbell = false
-set.t_vb = ''
+set.t_vb = ""
 
 -- wait 500 milliseconds for mappings to complete
 set.timeoutlen = 500
 
 -- Reload vim configs when changing them.
-local reload_configs = vim.api.nvim_create_augroup('reload_configs', {})
-vim.api.nvim_create_autocmd('BufWritePost', {
-    command = 'source <afile>',
-    pattern = {VIMD .. '/*.vim', VIMD .. '/*.lua'},
+local reload_configs = vim.api.nvim_create_augroup("reload_configs", {})
+vim.api.nvim_create_autocmd("BufWritePost", {
+    command = "source <afile>",
+    pattern = { VIMD .. "/*.vim", VIMD .. "/*.lua" },
     group = reload_configs
 })
 
 -- Allow mouse control in normal, visual and command modes.
---set.mouse = 'nvc'
+--set.mouse = "nvc"
 
 -- Make 0 behave like <home> on most editors.
-vim.cmd("nnoremap <expr> <silent> 0 col('.') == match(getline('.'),'\\S')+1 ? '0' : '^'")
---TODO finish implementing this in lua
---vim.keymap.set(
---    'n',
---    function() vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[1], false)  {expr = true})
+vim.keymap.set("n", "0", lua_utils.goto_line_start, { silent = true, expr = true })
+vim.keymap.set("n", "<home>", lua_utils.goto_line_start, { silent = true, expr = true })
+vim.keymap.set("i", "<home>", function()
+    return "<esc>" .. lua_utils.goto_line_start() .. "i"
+end, { silent = true, expr = true })
 
 --TODO this makes sure files are opened unfolded. Find a better way.
-local general_au_group = vim.api.nvim_create_augroup("general_au_group", {})
 vim.api.nvim_create_autocmd("BufReadPost", {
     command = "normal zR",
-    group = general_au_group
+    group = reload_configs
 })
 
 -----------------------------------------
@@ -139,11 +144,11 @@ pcall(vim.cmd, "colorscheme vscode")
 -- <3>  Text, tab and indent related
 -----------------------------------------
 -- Tab settings
-set.expandtab = true
-set.smarttab  =  true
+set.expandtab   = true
+set.smarttab    = true
 -- 1 tab = 4 spaces
-set.shiftwidth = 4
-set.tabstop = 4
+set.shiftwidth  = 4
+set.tabstop     = 4
 set.softtabstop = 4
 
 set.autoindent = true
@@ -164,8 +169,8 @@ set.cpoptions = string.gsub(set.cpoptions, '_', '')
 -- <4>  Visual mode related
 -----------------------------------------
 -- Visual mode pressing * or # searches for the current selection
-vim.keymap.set('v', '*', ':<C-u>call VisualSelection("", "")<CR>/<C-R>=@/<CR><CR>', {silent = true})
-vim.keymap.set('v', '#', ':<C-u>call VisualSelection("", "")<CR>?<C-R>=@/<CR><CR>', {silent = true})
+vim.keymap.set('v', '*', ':<C-u>call VisualSelection("", "")<CR>/<C-R>=@/<CR><CR>', { silent = true })
+vim.keymap.set('v', '#', ':<C-u>call VisualSelection("", "")<CR>?<C-R>=@/<CR><CR>', { silent = true })
 
 -- Stay in visual mode after indenting
 vim.keymap.set('v', '>', '>gv')
@@ -176,13 +181,13 @@ vim.keymap.set('v', '<', '<gv')
 -----------------------------------------
 ----- Windows
 -- Smart way to move between windows
-vim.keymap.set('n', '<C-j>', '<C-W>j')
-vim.keymap.set('n', '<C-k>', '<C-W>k')
-vim.keymap.set('n', '<C-h>', '<C-W>h')
-vim.keymap.set('n', '<C-l>', '<C-W>l')
+vim.keymap.set('n', '<m-j>', '<C-W>j')
+vim.keymap.set('n', '<m-k>', '<C-W>k')
+vim.keymap.set('n', '<m-h>', '<C-W>h')
+vim.keymap.set('n', '<m-l>', '<C-W>l')
 
 -- Use Q to exit an unchanged window (usefull for helper windows)
-vim.keymap.set('n', 'Q', ':q<cr>', {silent = true})
+vim.keymap.set('n', 'Q', ':q<cr>', { silent = true })
 -- Disable command history (I type this way too many times wrong).
 vim.keymap.set('n', 'q:', ':q')
 
@@ -201,14 +206,14 @@ set.path = '.,**'
 vim.cmd('cnoreabbre f find')
 vim.cmd('cnoreabbre sf sfind')
 vim.cmd('cnoreabbre vf vert sfind')
---TODO add shortcuts (not commands) for :find,:sfind and :vert sfind
 
 -- Use existing buffers in the current tab if already open.
 set.switchbuf = 'useopen'
 
 -- Return to last edit position when opening files (You want this!).
--- autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-vim.api.nvim_create_autocmd('BufReadPost', {command = [[if line("'\"") > 1 && line("\'\"") <= line("$") | exe "normal! g\'\"" | endif]]})
+--TODO fully convert this monster to lua.
+vim.api.nvim_create_autocmd('BufReadPost',
+    { command = [[if line("'\"") > 1 && line("\'\"") <= line("$") | exe "normal! g\'\"" | endif]] })
 
 -- Buffer navigation (mostly done with gb. Next/previous is for a lazy mood).
 vim.keymap.set('n', 'gb', ':ls<CR>:b<space>')
@@ -219,7 +224,7 @@ vim.keymap.set('n', '<leader>bv', ':ls<cr>:vert sb<space>')
 
 -- Closing buffers.
 vim.keymap.set('n', '<leader>bd', ':ls<cr>:bdelete<space>')
-vim.keymap.set('n', '<leader>bo', ':w<cr>:tabonly<cr>:%bd<cr><c-o>:bd#<cr>', {silent = true})
+vim.keymap.set('n', '<leader>bo', ':w<cr>:tabonly<cr>:%bd<cr><c-o>:bd#<cr>', { silent = true })
 
 ----- Tabpages
 -- Enable switching to last-active tab
@@ -227,8 +232,9 @@ if last_tab == nil then
     last_tab = 1
     last_tab_bkup = 1
 end
-vim.api.nvim_create_autocmd('TabLeave', {command = 'lua last_tab_bkup = last_tab; last_tab = vim.api.nvim_get_current_tabpage()'})
-vim.api.nvim_create_autocmd('TabClosed', {command = 'lua last_tab = last_tab_bkup'})
+vim.api.nvim_create_autocmd('TabLeave',
+    { command = 'lua last_tab_bkup = last_tab; last_tab = vim.api.nvim_get_current_tabpage()' })
+vim.api.nvim_create_autocmd('TabClosed', { command = 'lua last_tab = last_tab_bkup' })
 -- if !exists('g:Lasttab')
 --     let g:Lasttab = 1
 --     let g:Lasttab_backup = 1
@@ -245,7 +251,7 @@ vim.keymap.set('n', '<leader>tm', ':tabmove<cr>')
 vim.keymap.set('n', '<leader>th', ':tab help<space>')
 vim.keymap.set('n', '<c-pageup>', ':tabnext<cr>')
 vim.keymap.set('n', '<c-pagedown>', ':tabprevious<cr>')
-vim.keymap.set('n', '<Leader>tt', ':lua vim.cmd("tabnext " .. last_tab)<cr>', {silent = true})
+vim.keymap.set('n', '<Leader>tt', ':lua vim.cmd("tabnext " .. last_tab)<cr>', { silent = true })
 
 -- Switch CWD to the directory of the open buffer. Global for all tabpages.
 vim.keymap.set('n', '<leader>cd', ':cd %:p:h<cr>')
@@ -260,20 +266,20 @@ set.laststatus = 2
 -- <7>  Editing mappings
 -----------------------------------------
 -- Move lines of text using alt+shift+h/j/k/l.
-vim.keymap.set('n', '<m-j>', 'mz:m+<cr>`z')
-vim.keymap.set('n', '<m-k>', 'mz:m-2<cr>`z')
-vim.keymap.set('v', '<m-j>', ":m'>+<cr>`<my`>mzgv`yo`z")
-vim.keymap.set('v', '<m-k>', ":m'<-2<cr>`>my`<mzgv`yo`z")
-vim.keymap.set('v', '<m-l>', '>gv4l')
-vim.keymap.set('v', '<m-h>', '<gv4h')
-vim.keymap.set('n', '<m-l>', '>>')
-vim.keymap.set('n', '<m-h>', '<<')
+vim.keymap.set('n', '<c-j>', 'mz:m+<cr>`z')
+vim.keymap.set('n', '<c-k>', 'mz:m-2<cr>`z')
+vim.keymap.set('v', '<c-j>', ":m'>+<cr>`<my`>mzgv`yo`z")
+vim.keymap.set('v', '<c-k>', ":m'<-2<cr>`>my`<mzgv`yo`z")
+vim.keymap.set('v', '<c-l>', '>gv4l')
+vim.keymap.set('v', '<c-h>', '<gv4h')
+vim.keymap.set('n', '<c-l>', '>>')
+vim.keymap.set('n', '<c-h>', '<<')
 
 -- Allow paste and undo in insert and visual mode.
 vim.keymap.set('i', '<c-v>', '<c-g>u<esc>pa<c-g>u')
 
 -- Make Y yank to end of line (much like C and D).
-vim.keymap.set('n', 'Y', 'y$', {silent = true})
+vim.keymap.set('n', 'Y', 'y$', { silent = true })
 
 -- Use do and dO to turn current line to empty line and move on.
 vim.keymap.set('n', 'do', '0Dj')
@@ -292,75 +298,52 @@ vim.keymap.set('i', '(<cr>', '(<cr><c-g>u)<esc>O')
 -- <8>  Integrated terminal settings
 -----------------------------------------
 -- Openning terminals.
-vim.keymap.set('n', 'gs', '<c-w>s:terminal<cr>i', {silent = true})
+vim.keymap.set('n', 'gs', '<c-w>s:terminal<cr>i', { silent = true })
 vim.keymap.set('n', '<leader>ts', ':tabedit<cr>:terminal<cr>i')
 
 -- Move around the terminal in a way compatible with tmux.
 vim.keymap.set('t', '<c-b>[', '<c-\\><c-n>')
 vim.keymap.set('t', '<c-b><c-[>', '<c-\\><c-n>')
-vim.keymap.set('t', '<c-b>x', '<c-\\><c-n>:bd!<cr>', {silent = true})
+vim.keymap.set('t', '<c-b>x', '<c-\\><c-n>:bd!<cr>', { silent = true })
 
-vim.api.nvim_create_autocmd('TermOpen', {command = "setlocal nonumber"})
-vim.api.nvim_create_autocmd('TermOpen', {command = "nnoremap <buffer><silent> Q :bd!<cr>"})
+vim.api.nvim_create_autocmd('TermOpen', { command = "setlocal nonumber" })
+vim.api.nvim_create_autocmd('TermOpen', { command = "nnoremap <buffer><silent> Q :bd!<cr>" })
 
 -----------------------------------------
 -- <9>  Spell checking
 -----------------------------------------
 -- Toggle spell checking.
-vim.keymap.set('n', '<leader>ss', ':setlocal spell!<cr>')
+vim.keymap.set("n", "<leader>pt", ":setlocal spell!<cr>")
 
 -- Shortcuts using <leader> .
-vim.keymap.set('n', '<leader>sn',  ']s')
-vim.keymap.set('n', '<leader>sp',  '[s')
-vim.keymap.set('n', '<leader>sa',  'zg')
-vim.keymap.set('n', '<leader>s?',  'z=')
+vim.keymap.set("n", "<leader>pn", "]s")
+vim.keymap.set("n", "<leader>pp", "[s")
+vim.keymap.set("n", "<leader>pa", "zg")
+vim.keymap.set("n", "<leader>p?", "z=")
 
 -----------------------------------------
 -- <10> Software developement related
 -----------------------------------------
 -- Basic debugging with gdb inside of vim.
 --command! -nargs=1 GDB packadd termdebug | Termdebug <args>
-vim.api.nvim_create_user_command('GDB', 'packadd termdebug | Termdebug <args>', {nargs = 1})
+vim.api.nvim_create_user_command("GDB", "packadd termdebug | Termdebug <args>", { nargs = 1 })
 
 -- Shortcuts for using the quickfix list (used by :make and other commands).
-vim.keymap.set('n', '<leader>co', ':copen<cr>')
-vim.keymap.set('n', '<leader>cc', ':cclose<cr>')
-vim.keymap.set('n', '<leader>cn', ':cnext<cr>')
-vim.keymap.set('n', '<leader>cp', ':cprevious<cr>')
--- If quickfix is the last buffer opened, close it.
--- TODO convert to lua.
-vim.cmd("autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | q | endif")
+vim.keymap.set("n", "<leader>co", ":copen<cr>")
+vim.keymap.set("n", "<leader>cc", ":cclose<cr>")
+vim.keymap.set("n", "<leader>cn", ":cnext<cr>")
+vim.keymap.set("n", "<leader>cp", ":cprevious<cr>")
+-- Shortcuts for using the location list (allocated by lsp diagnostics on command).
+vim.keymap.set("n", "<leader>lo", ":lopen<cr>")
+vim.keymap.set("n", "<leader>lc", ":lclose<cr>")
+vim.keymap.set("n", "<leader>ln", ":lnext<cr>")
+vim.keymap.set("n", "<leader>lp", ":lprevious<cr>")
 
------------------------------------------
--- <11> Helper functions
------------------------------------------
---TODO convert this to lua.
-vim.cmd [[
-function! CmdLine(str)
-    call feedkeys(":" . a:str)
-endfunction
+-- If quickfix/location list is the last buffer opened, close it.
+lua_utils.close_if_last("qf")
 
-function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'gv'
-        call CmdLine("Ack '" . l:pattern . "' " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-]]
-
------------------------------------------
--- <12> Config Scripts
+----------------------------------------
+-- <11> Config Scripts
 -----------------------------------------
 -- Plugins.
 require("packer_config")
-
