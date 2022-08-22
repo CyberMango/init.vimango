@@ -14,6 +14,13 @@ function lua_utils.table_length(a_table)
     return size
 end
 
+function lua_utils.is_file_exist(filename)
+    if nil == io.open(filename) then
+        return false
+    end
+    return true
+end
+
 function lua_utils.goto_line_start()
     local curr_pos = vim.api.nvim_win_get_cursor(0)
     local curr_line = vim.api.nvim_buf_get_lines(0, curr_pos[1] - 1, curr_pos[1], false)

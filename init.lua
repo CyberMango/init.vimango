@@ -308,16 +308,20 @@ vim.keymap.set('i', '(<cr>', '(<cr><c-g>u)<esc>O')
 -- <8>  Integrated terminal settings
 -----------------------------------------
 -- Openning terminals.
-vim.keymap.set('n', 'gs', '<c-w>s:terminal<cr>i', { silent = true })
-vim.keymap.set('n', '<leader>ts', ':tabedit<cr>:terminal<cr>i')
+vim.keymap.set("n", "gs", "<c-w>s:terminal<cr>i", { silent = true })
+vim.keymap.set("n", "<leader>ts", ":tabedit<cr>:terminal<cr>i")
 
 -- Move around the terminal in a way compatible with tmux.
-vim.keymap.set('t', '<c-b>[', '<c-\\><c-n>')
-vim.keymap.set('t', '<c-b><c-[>', '<c-\\><c-n>')
-vim.keymap.set('t', '<c-b>x', '<c-\\><c-n>:bd!<cr>', { silent = true })
+vim.keymap.set("t", "<c-b>[", "<c-\\><c-n>")
+vim.keymap.set("t", "<c-b><c-[>", "<c-\\><c-n>")
+vim.keymap.set("t", "<c-b>x", "<c-\\><c-n>:bd!<cr>", { silent = true })
+vim.keymap.set("t", "<c-b>h", "<c-\\><c-n><c-w>h")
+vim.keymap.set("t", "<c-b>j", "<c-\\><c-n><c-w>j")
+vim.keymap.set("t", "<c-b>k", "<c-\\><c-n><c-w>k")
+vim.keymap.set("t", "<c-b>l", "<c-\\><c-n><c-w>l")
 
-vim.api.nvim_create_autocmd('TermOpen', { command = "setlocal nonumber" })
-vim.api.nvim_create_autocmd('TermOpen', { command = "nnoremap <buffer><silent> Q :bd!<cr>" })
+vim.api.nvim_create_autocmd("TermOpen", { command = "setlocal nonumber" })
+vim.api.nvim_create_autocmd("TermOpen", { command = "nnoremap <buffer><silent> Q :bd!<cr>" })
 
 -----------------------------------------
 -- <9>  Spell checking
