@@ -14,6 +14,7 @@ end
 if not lua_utils.is_file_exist(packer_path) then
     os.execute("git clone --depth 1 https://github.com/wbthomason/packer.nvim " ..
         "~/.local/share/nvim/site/pack/packer/start/packer.nvim")
+    vim.o.rtp = vim.o.rtp .. "," .. packer_path .. "/start/packer.nvim"
 end
 
 -- Run PackerCompile everytime this file changes.
