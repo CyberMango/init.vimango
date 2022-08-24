@@ -15,10 +15,13 @@ function lua_utils.table_length(a_table)
 end
 
 function lua_utils.is_file_exist(filename)
-    if nil == io.open(filename) then
-        return false
+    local f = io.open(filename, "r")
+    if nil ~= f then
+        io.close(f)
+        return true
     end
-    return true
+
+    return false
 end
 
 function lua_utils.goto_line_start()
