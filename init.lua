@@ -22,9 +22,6 @@ require("vimscript_utils")
 -----------------------------------------
 -- <1>  General and UI configs
 -----------------------------------------
--- Use this to make it easier to move settings from vim.o to vim.opt if you swap the two.
-local set = vim.o
-
 -- init.lua's directory.
 VIMD = vim.env.MYVIMRC:sub(1, -string.len('init.lua') - 2)
 vim.cmd(string.format("let VIMD = '%s'", VIMD))
@@ -33,19 +30,19 @@ vim.cmd(string.format("let $VIMD = '%s'", VIMD))
 
 -- General
 vim.wo.number = true
-set.cursorline = true
+lua_utils.set.cursorline = true
 vim.wo.wrap = false
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- Show current position in the file.
-set.ruler = true
+lua_utils.set.ruler = true
 -- Always show the sign column (the column that marks lines with errors).
-set.signcolumn = "yes"
+lua_utils.set.signcolumn = "yes"
 -- Scroll page with 1 line space.
-set.scrolloff = 1
+lua_utils.set.scrolloff = 1
 -- Number of commands to remember.
-set.history = 500
+lua_utils.set.history = 500
 
 -- Enable filetype plugins.
 --TODO is this necessary? whats a better way to do this?
@@ -53,10 +50,10 @@ vim.cmd('filetype plugin on')
 vim.cmd('filetype indent on')
 
 -- Search related configurations.
-set.ignorecase = true
-set.smartcase = true
-set.incsearch = true
-set.hlsearch = true
+lua_utils.set.ignorecase = true
+lua_utils.set.smartcase = true
+lua_utils.set.incsearch = true
+lua_utils.set.hlsearch = true
 -- Cancel search highlight on esc press.
 vim.keymap.set('n', '<esc>', '<esc>:noh<cr>', { silent = true })
 
@@ -70,42 +67,42 @@ vim.keymap.set('n', '<c-c>v', '"+p')
 vim.keymap.set('i', '<c-c>v', '<esc>"+pa')
 
 -- Don't redraw while executing macros (good performance config).
-set.lazyredraw = true
+lua_utils.set.lazyredraw = true
 
 -- How vim completions work
-set.completeopt = "longest,menuone,preview"
+lua_utils.set.completeopt = "longest,menuone,preview"
 
 -- Set wildmenu (autocompletions in command line).
-set.wildmenu = true
-set.wildmode = "longest,full"
+lua_utils.set.wildmenu = true
+lua_utils.set.wildmode = "longest,full"
 -- Command prompt completion keystroke is tab (\t).
-set.wildchar = ('\t'):byte()
+lua_utils.set.wildchar = ('\t'):byte()
 -- How to refer to wildchar inside of mappings (26 == ctrl-z).
-set.wildcharm = 26
+lua_utils.set.wildcharm = 26
 -- Ignore compiled files.
-set.wildignore = "*.o,*~,*.pyc"
+lua_utils.set.wildignore = "*.o,*~,*.pyc"
 
 -- Configure backspace so it acts as it should act
-set.backspace = "eol,start,indent"
+lua_utils.set.backspace = "eol,start,indent"
 
 -- Allow left/right to move between lines
---set.whichwrap = set.whichwrap .. '<,>,h,l'
+--lua_utils.set.whichwrap = lua_utils.set.whichwrap .. '<,>,h,l'
 
 -- For regular expressions turn magic on
-set.magic = true
+lua_utils.set.magic = true
 
 -- Show matching brackets when text indicator is over them
-set.showmatch = true
+lua_utils.set.showmatch = true
 -- How many tenths of a second to blink when matching brackets
-set.mat = 2
+lua_utils.set.mat = 2
 --
 -- No annoying sound on errors
-set.errorbells = false
-set.visualbell = false
-set.t_vb = ""
+lua_utils.set.errorbells = false
+lua_utils.set.visualbell = false
+lua_utils.set.t_vb = ""
 
 -- wait 500 milliseconds for mappings to complete
-set.timeoutlen = 500
+lua_utils.set.timeoutlen = 500
 
 -- Reload vim configs when changing them.
 local reload_configs = vim.api.nvim_create_augroup("reload_configs", {})
@@ -116,7 +113,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 -- Allow mouse control in normal, visual and command modes.
---set.mouse = "nvc"
+--lua_utils.set.mouse = "nvc"
 
 -- Make 0 behave like <home> on most editors.
 vim.keymap.set("n", "0", lua_utils.goto_line_start, { silent = true, expr = true })
@@ -134,9 +131,9 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 -----------------------------------------
 -- <2>  Colors, Fonts, ...
 -----------------------------------------
-set.termguicolors = true
+lua_utils.set.termguicolors = true
 -- Set utf8 as standard encoding and en_US as the standard language
-set.encoding = "utf8"
+lua_utils.set.encoding = "utf8"
 -- Chosen colorscheme. Called in an error safe way.
 pcall(vim.cmd, "colorscheme vscode")
 
@@ -144,23 +141,23 @@ pcall(vim.cmd, "colorscheme vscode")
 -- <3>  Text, tab and indent related
 -----------------------------------------
 -- Tab settings
-set.expandtab   = true
-set.smarttab    = true
+lua_utils.set.expandtab   = true
+lua_utils.set.smarttab    = true
 -- 1 tab = 4 spaces
-set.shiftwidth  = 4
-set.tabstop     = 4
-set.softtabstop = 4
+lua_utils.set.shiftwidth  = 4
+lua_utils.set.tabstop     = 4
+lua_utils.set.softtabstop = 4
 
-set.autoindent = true
+lua_utils.set.autoindent = true
 
 -- Dont auto comment when going down a line in a comment with enter or O/o
 -- (needs to be specifically set for some file types due to ftplugins).
 --TODO ask on a forum if this is really the best alternative to set formatoptions-=r
-set.formatoptions = string.gsub(set.formatoptions, 'r', '')
-set.formatoptions = string.gsub(set.formatoptions, 'o', '')
+lua_utils.set.formatoptions = string.gsub(lua_utils.set.formatoptions, 'r', '')
+lua_utils.set.formatoptions = string.gsub(lua_utils.set.formatoptions, 'o', '')
 
 -- Stop the legacy behavior that cw acts like ce.
-set.cpoptions = string.gsub(set.cpoptions, '_', '')
+lua_utils.set.cpoptions = string.gsub(lua_utils.set.cpoptions, '_', '')
 
 -- Remove trailing whitespace on save (But I now have a smart plugin for it).
 --vim.api.nvim_create_autocmd('BufWritePre', {command = '%s/\s\+$//e'})
@@ -192,15 +189,15 @@ vim.keymap.set('n', 'Q', ':q<cr>', { silent = true })
 vim.keymap.set('n', 'q:', ':q')
 
 -- Open new split panes on the bottom and on the right
-set.splitbelow = true
-set.splitright = true
+lua_utils.set.splitbelow = true
+lua_utils.set.splitright = true
 
 ----- Buffers
 -- A buffer becomes hidden when it is abandoned
-set.hidden = true
+lua_utils.set.hidden = true
 
 -- Allow actions like :find and gf to find files in sub-directories of :pwd
-set.path = '.,**'
+lua_utils.set.path = '.,**'
 
 -- Use :f, :sf and :vf as shortcuts for using :find
 vim.cmd('cnoreabbre f find')
@@ -208,7 +205,7 @@ vim.cmd('cnoreabbre sf sfind')
 vim.cmd('cnoreabbre vf vert sfind')
 
 -- Use existing buffers in the current tab if already open.
-set.switchbuf = 'useopen'
+lua_utils.set.switchbuf = 'useopen'
 
 -- Return to last edit position when opening files (You want this!).
 vim.api.nvim_create_autocmd("BufReadPost", {
@@ -270,7 +267,7 @@ vim.keymap.set('n', '<leader>cd', ':cd %:p:h<cr>')
 -- <6>  Status line
 -----------------------------------------
 -- Always show the status line
-set.laststatus = 2
+lua_utils.set.laststatus = 2
 
 -----------------------------------------
 -- <7>  Editing mappings
@@ -296,9 +293,9 @@ vim.keymap.set('n', 'do', '0Dj')
 vim.keymap.set('n', 'dO', '0Dk')
 
 -- Allow undoing changes after reopenning a file.
-set.undofile = true
-set.undolevels = 1000
-set.undoreload = 10000
+lua_utils.set.undofile = true
+lua_utils.set.undolevels = 1000
+lua_utils.set.undoreload = 10000
 
 -- Auto expand brackets.
 vim.keymap.set('i', '{<cr>', '{<cr><c-g>u}<esc>O')

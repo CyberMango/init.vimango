@@ -5,6 +5,9 @@ local lua_utils = {}
 
 local reload_configs = vim.api.nvim_create_augroup("reload_configs", {})
 
+-- Use this to make it easier to move settings from vim.o to vim.opt if you swap the two.
+lua_utils.set = vim.o
+
 function lua_utils.table_length(a_table)
     local size = 0
     for _ in pairs(a_table) do
@@ -39,7 +42,7 @@ end
 function lua_utils.close_if_last(file_type)
     vim.api.nvim_create_autocmd("WinEnter", {
         callback = function()
-            if file_type == vim.o.ft and 1 == lua_utils.table_length(vim.api.nvim_list_wins()) then
+            if file_type == lua_utils.set.ft and 1 == lua_utils.table_length(vim.api.nvim_list_wins()) then
                 vim.cmd(":q")
             end
         end,
