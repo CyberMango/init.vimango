@@ -1,24 +1,36 @@
---TODO ask in a forum if this is the best way to concatenate new paths to path.
-vim.api.nvim_set_option_value('path', vim.o.path .. ',/usr/lib/python*/**', {scope = 'local'})
-vim.api.nvim_set_option_value('path', vim.o.path .. ',~/.local/lib/**/site-packages/**', {scope = 'local'})
+local lua_utils = require("lua_utils")
+
+--TODO change this when local path appending bug is solved.
+lua_utils.setlocal.path:append(lua_utils.set.path._value)
+lua_utils.setlocal.path:append("~/.local/lib/**/site-packages/**")
+lua_utils.setlocal.path:append("/usr/lib/python*/**")
 
 -- Run ipython with <leader>ti
-vim.keymap.set('n', '<leader>ti', '<c-w>s:terminal<cr>iipython<cr><c-l>', {silent = true, buffer = true})
+vim.keymap.set("n", "<leader>ti", "<c-w>s:terminal<cr>iipython<cr><c-l>", { silent = true, buffer = true })
 
 -- Run main with :make. See output again with :copen. Exists for compatability with cpp commands.
-vim.api.nvim_set_option_value('makeprg', 'python3 main.py', {scope = 'local'})
+vim.api.nvim_set_option_value("makeprg", "python3 main.py", { scope = "local" })
 
 -- Run current file with <F5> in a split window.
-vim.keymap.set('n', '<f5>', '<c-w>s4<c-w>-:terminal<space>python3<space>%<cr>i', {buffer = true})
+vim.keymap.set("n", "<f5>", "<c-w>s4<c-w>-:terminal<space>python3<space>%<cr>i", { buffer = true })
 -- Run main file in a split window with ctrl-f5.
-vim.keymap.set('n', '<f29>', '<c-w>s4<c-w>-:terminal<space>python3<space>main.py<cr>i', {buffer = true})
+vim.keymap.set("n", "<f29>", "<c-w>s4<c-w>-:terminal<space>python3<space>main.py<cr>i", { buffer = true })
 
---TODO ask if this is the correct way to add colorscheme settings.
 -- Make python constants blue like in VSCode for the vscode colorscheme.
-if "vscode" == vim.g.colors_name then
-    require("vscode").setup({
-        group_overrides = {
-            TSConstant = { fg = "#4fc1ff" },
-        },
-    })
+local function config_vscode_colors()
+    if "vscode" == vim.g.colors_name then
+        require("vscode").setup({
+            group_overrides = {
+                TSConstant = { fg = "#4fc1ff" },
+            },
+        })
+    end
 end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    group = lua_utils.reload_configs,
+    callback = config_vscode_colors,
+    pattern = "*.py",
+})
+
+config_vscode_colors()

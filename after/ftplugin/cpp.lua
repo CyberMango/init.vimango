@@ -1,11 +1,16 @@
-vim.api.nvim_set_option_value('cindent', true, {scope = 'local'})
-vim.api.nvim_set_option_value('path', vim.o.path .. ',/usr/include/**', {scope = 'local'})
+local lua_utils = require("lua_utils")
+
+lua_utils.setlocal.cindent = true
 
 -- TODO change this to cmake when you learn how to use it!!!
 vim.api.nvim_set_option_value('makeprg', 'make', {scope = 'local'})
 
-vim.api.nvim_set_option_value('formatoptions', string.gsub(vim.o.formatoptions, 'r', ''), {scope = 'local'})
-vim.api.nvim_set_option_value('formatoptions', string.gsub(vim.o.formatoptions, 'o', ''), {scope = 'local'})
+--TODO change this when local path appending bug is solved.
+lua_utils.setlocal.path:append(lua_utils.set.path._value)
+lua_utils.setlocal.path:append("/usr/include/**")
+-- lua_utils.setlocal.path:append("/usr/include/**")
+
+lua_utils.setlocal.formatoptions:remove({ "r", "o" })
 
 --[[Hacky solution to be able to switch between ccls and clangd.
     For some unknown reason this function needs to be called twice in order for the server to run.

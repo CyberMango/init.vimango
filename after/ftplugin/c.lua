@@ -1,9 +1,15 @@
---TODO ask in a forum if this is the best way to replicate vims' setlocal. 
-vim.api.nvim_set_option_value('cindent', true, {scope = 'local'})
-vim.api.nvim_set_option_value('path', vim.o.path .. ',/usr/include/**', {scope = 'local'})
+local lua_utils = require("lua_utils")
 
-vim.api.nvim_set_option_value('formatoptions', string.gsub(vim.o.formatoptions, 'r', ''), {scope = 'local'})
-vim.api.nvim_set_option_value('formatoptions', string.gsub(vim.o.formatoptions, 'o', ''), {scope = 'local'})
+lua_utils.setlocal.cindent = true
+
+-- TODO find a better solution to this. Just appending to setlocal makes this the only value in path
+-- (probably because the local path is empty, and this means we are using it now instead of the
+-- global one).
+lua_utils.setlocal.path:append(lua_utils.set.path._value)
+lua_utils.setlocal.path:append("/usr/include/**")
+-- lua_utils.setlocal.path:append("/usr/include/**")
+
+lua_utils.setlocal.formatoptions:remove({ "r", "o" })
 
 -- Hacky solution for server switching. See cpp.lua.
 UseCcls()

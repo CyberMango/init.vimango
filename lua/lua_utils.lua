@@ -3,10 +3,12 @@
 
 local lua_utils = {}
 
-local reload_configs = vim.api.nvim_create_augroup("reload_configs", {})
+lua_utils.reload_configs = vim.api.nvim_create_augroup("reload_configs", {})
 
--- Use this to make it easier to move settings from vim.o to vim.opt if you swap the two.
-lua_utils.set = vim.o
+-- Use this to make it easier to move settings from vim.o to vim.opt if you ever swap the two.
+lua_utils.set = vim.opt
+lua_utils.setlocal = vim.opt_local
+lua_utils.setglobal = vim.opt_global
 
 function lua_utils.table_length(a_table)
     local size = 0
@@ -46,7 +48,7 @@ function lua_utils.close_if_last(file_type)
                 vim.cmd(":q")
             end
         end,
-        group = reload_configs
+        group = lua_utils.reload_configs
     })
 end
 

@@ -44,11 +44,6 @@ lua_utils.set.scrolloff = 1
 -- Number of commands to remember.
 lua_utils.set.history = 500
 
--- Enable filetype plugins.
---TODO is this necessary? whats a better way to do this?
-vim.cmd('filetype plugin on')
-vim.cmd('filetype indent on')
-
 -- Search related configurations.
 lua_utils.set.ignorecase = true
 lua_utils.set.smartcase = true
@@ -99,7 +94,6 @@ lua_utils.set.mat = 2
 -- No annoying sound on errors
 lua_utils.set.errorbells = false
 lua_utils.set.visualbell = false
-lua_utils.set.t_vb = ""
 
 -- wait 500 milliseconds for mappings to complete
 lua_utils.set.timeoutlen = 500
@@ -122,11 +116,8 @@ vim.keymap.set("i", "<home>", function()
     return "<esc>" .. lua_utils.goto_line_start() .. "i"
 end, { silent = true, expr = true })
 
---TODO this makes sure files are opened unfolded. Find a better way.
-vim.api.nvim_create_autocmd("BufReadPost", {
-    command = "normal zR",
-    group = reload_configs
-})
+-- Dont open files folded.
+lua_utils.set.foldlevel = 99
 
 -----------------------------------------
 -- <2>  Colors, Fonts, ...
@@ -140,24 +131,22 @@ pcall(vim.cmd, "colorscheme vscode")
 -----------------------------------------
 -- <3>  Text, tab and indent related
 -----------------------------------------
--- Tab settings
+-- Tab settings.
 lua_utils.set.expandtab   = true
 lua_utils.set.smarttab    = true
--- 1 tab = 4 spaces
+-- 1 tab = 4 spaces.
 lua_utils.set.shiftwidth  = 4
 lua_utils.set.tabstop     = 4
 lua_utils.set.softtabstop = 4
 
 lua_utils.set.autoindent = true
 
--- Dont auto comment when going down a line in a comment with enter or O/o
+-- Dont auto comment when going down a line in a comment with enter or O/o .
 -- (needs to be specifically set for some file types due to ftplugins).
---TODO ask on a forum if this is really the best alternative to set formatoptions-=r
-lua_utils.set.formatoptions = string.gsub(lua_utils.set.formatoptions, 'r', '')
-lua_utils.set.formatoptions = string.gsub(lua_utils.set.formatoptions, 'o', '')
+lua_utils.set.formatoptions:remove({ "r", "o" })
 
 -- Stop the legacy behavior that cw acts like ce.
-lua_utils.set.cpoptions = string.gsub(lua_utils.set.cpoptions, '_', '')
+lua_utils.set.cpoptions:remove("_")
 
 -- Remove trailing whitespace on save (But I now have a smart plugin for it).
 --vim.api.nvim_create_autocmd('BufWritePre', {command = '%s/\s\+$//e'})
@@ -200,9 +189,9 @@ lua_utils.set.hidden = true
 lua_utils.set.path = '.,**'
 
 -- Use :f, :sf and :vf as shortcuts for using :find
-vim.cmd('cnoreabbre f find')
-vim.cmd('cnoreabbre sf sfind')
-vim.cmd('cnoreabbre vf vert sfind')
+vim.cmd("cnoreabbre f find")
+vim.cmd("cnoreabbre sf sfind")
+vim.cmd("cnoreabbre vf vert sfind")
 
 -- Use existing buffers in the current tab if already open.
 lua_utils.set.switchbuf = 'useopen'
@@ -239,6 +228,7 @@ if last_tab == nil then
     last_tab = 1
     last_tab_bkup = 1
 end
+--TODO convert to true lua, make the vars local and add au group.
 vim.api.nvim_create_autocmd('TabLeave',
     { command = 'lua last_tab_bkup = last_tab; last_tab = vim.api.nvim_get_current_tabpage()' })
 vim.api.nvim_create_autocmd('TabClosed', { command = 'lua last_tab = last_tab_bkup' })

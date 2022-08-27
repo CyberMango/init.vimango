@@ -18,7 +18,7 @@ if not lua_utils.is_file_exist(packer_path) then
         return {}
     end
 
-    vim.o.rtp = vim.o.rtp .. "," .. packer_path .. "/start/packer.nvim"
+    lua_utils.set.rtp:append(packer_path .. "/start/packer.nvim")
 end
 
 -- Run PackerCompile everytime this file changes.
