@@ -99,11 +99,11 @@ lua_utils.set.visualbell = false
 lua_utils.set.timeoutlen = 500
 
 -- Reload vim configs when changing them.
-local reload_configs = vim.api.nvim_create_augroup("reload_configs", {})
+local init_lua_aus = vim.api.nvim_create_augroup("reload_configs", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
     command = "source <afile>",
     pattern = { VIMD .. "/*.vim", VIMD .. "/*.lua" },
-    group = reload_configs
+    group = init_lua_aus
 })
 
 -- Allow mouse control in normal, visual and command modes.
@@ -172,23 +172,23 @@ vim.keymap.set('n', '<m-k>', '<C-W>k')
 vim.keymap.set('n', '<m-h>', '<C-W>h')
 vim.keymap.set('n', '<m-l>', '<C-W>l')
 
--- Use Q to exit an unchanged window (usefull for helper windows)
+-- Use Q to exit an unchanged window (usefull for helper windows).
 vim.keymap.set('n', 'Q', ':q<cr>', { silent = true })
 -- Disable command history (I type this way too many times wrong).
 vim.keymap.set('n', 'q:', ':q')
 
--- Open new split panes on the bottom and on the right
+-- Open new split panes on the bottom and on the right.
 lua_utils.set.splitbelow = true
 lua_utils.set.splitright = true
 
 ----- Buffers
--- A buffer becomes hidden when it is abandoned
+-- A buffer becomes hidden when it is abandoned.
 lua_utils.set.hidden = true
 
--- Allow actions like :find and gf to find files in sub-directories of :pwd
-lua_utils.set.path = '.,**'
+-- Allow actions like :find and gf to find files in sub-directories of :pwd .
+lua_utils.set.path:append("**")
 
--- Use :f, :sf and :vf as shortcuts for using :find
+-- Use :f, :sf and :vf as shortcuts for using :find .
 vim.cmd("cnoreabbre f find")
 vim.cmd("cnoreabbre sf sfind")
 vim.cmd("cnoreabbre vf vert sfind")
@@ -211,47 +211,60 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end,
 })
 
+-- Enable switching to last active buffer.
+if Last_buf == nil then
+    Last_buf = 1
+end
+vim.api.nvim_create_autocmd("BufLeave", {
+    callback = function()
+        Last_buf = vim.api.nvim_get_current_buf()
+    end,
+    group = init_lua_aus
+})
+
 -- Buffer navigation (mostly done with gb. Next/previous is for a lazy mood).
-vim.keymap.set('n', 'gb', ':ls<CR>:b<space>')
-vim.keymap.set('n', '<leader>bn', ':bnext<cr>')
-vim.keymap.set('n', '<leader>bp', ':bprevious<cr>')
-vim.keymap.set('n', '<leader>bs', ':ls<cr>:sb<space>')
-vim.keymap.set('n', '<leader>bv', ':ls<cr>:vert sb<space>')
+vim.keymap.set("n", "gb", ":ls<CR>:b<space>")
+vim.keymap.set("n", "<leader>bn", ":bnext<cr>")
+vim.keymap.set("n", "<leader>bp", ":bprevious<cr>")
+vim.keymap.set("n", "<leader>bs", ":ls<cr>:sb<space>")
+vim.keymap.set("n", "<leader>bv", ":ls<cr>:vert sb<space>")
+vim.keymap.set("n", "<Leader>bb", ":lua vim.cmd('buffer ' .. Last_buf)<cr>", { silent = true })
 
 -- Closing buffers.
-vim.keymap.set('n', '<leader>bd', ':ls<cr>:bdelete<space>')
-vim.keymap.set('n', '<leader>bo', ':w<cr>:tabonly<cr>:%bd<cr><c-o>:bd#<cr>', { silent = true })
+vim.keymap.set("n", "<leader>bd", ":ls<cr>:bdelete<space>")
+vim.keymap.set("n", "<leader>bo", ":w<cr>:tabonly<cr>:%bd<cr><c-o>:bd#<cr>", { silent = true })
 
 ----- Tabpages
--- Enable switching to last-active tab
-if last_tab == nil then
-    last_tab = 1
-    last_tab_bkup = 1
+-- Enable switching to last active tab.
+if Last_tab == nil then
+    Last_tab = 1
+    Last_tab_backup = 1
 end
---TODO convert to true lua, make the vars local and add au group.
-vim.api.nvim_create_autocmd('TabLeave',
-    { command = 'lua last_tab_bkup = last_tab; last_tab = vim.api.nvim_get_current_tabpage()' })
-vim.api.nvim_create_autocmd('TabClosed', { command = 'lua last_tab = last_tab_bkup' })
--- if !exists('g:Lasttab')
---     let g:Lasttab = 1
---     let g:Lasttab_backup = 1
--- endif
--- autocmd! TabLeave * let g:Lasttab_backup = g:Lasttab | let g:Lasttab = tabpagenr()
--- autocmd! TabClosed * let g:Lasttab = g:Lasttab_backup
+vim.api.nvim_create_autocmd("TabLeave", {
+    callback = function()
+        Last_tab_backup = Last_tab
+        Last_tab = vim.api.nvim_get_current_tabpage()
+    end,
+    group = init_lua_aus
+})
+vim.api.nvim_create_autocmd("TabClosed", {
+    callback = function() Last_tab = Last_tab_backup end,
+    group = init_lua_aus
+})
 
 -- Useful mappings for managing tabs.
-vim.keymap.set('n', '<leader>te', ':tabedit<space>')
-vim.keymap.set('n', '<leader>tf', ':tabfind<space>')
-vim.keymap.set('n', '<leader>to', ':tabonly<cr>')
-vim.keymap.set('n', '<leader>tc', ':tabclose<cr>')
-vim.keymap.set('n', '<leader>tm', ':tabmove<cr>')
-vim.keymap.set('n', '<leader>th', ':tab help<space>')
-vim.keymap.set('n', '<c-pageup>', ':tabnext<cr>')
-vim.keymap.set('n', '<c-pagedown>', ':tabprevious<cr>')
-vim.keymap.set('n', '<Leader>tt', ':lua vim.cmd("tabnext " .. last_tab)<cr>', { silent = true })
+vim.keymap.set("n", "<leader>te", ":tabedit<space>")
+vim.keymap.set("n", "<leader>tf", ":tabfind<space>")
+vim.keymap.set("n", "<leader>to", ":tabonly<cr>")
+vim.keymap.set("n", "<leader>tc", ":tabclose<cr>")
+vim.keymap.set("n", "<leader>tm", ":tabmove<cr>")
+vim.keymap.set("n", "<leader>th", ":tab help<space>")
+vim.keymap.set("n", "<c-pageup>", ":tabnext<cr>")
+vim.keymap.set("n", "<c-pagedown>", ":tabprevious<cr>")
+vim.keymap.set("n", "<Leader>tt", ":lua vim.cmd('tabnext ' .. Last_tab)<cr>", { silent = true })
 
 -- Switch CWD to the directory of the open buffer. Global for all tabpages.
-vim.keymap.set('n', '<leader>cd', ':cd %:p:h<cr>')
+vim.keymap.set("n", "<leader>cd", ":cd %:p:h<cr>")
 
 -----------------------------------------
 -- <6>  Status line
