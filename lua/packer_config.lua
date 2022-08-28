@@ -6,14 +6,14 @@ local lua_utils = require("lua_utils")
 -- Install packer if its not already installed.
 local packer_path
 if vim.fn.has("win32") == 1 then
-    packer_path = os.getenv("HOME") .. "\\AppData\\Local\\nvim-data\\site\\pack\\packer"
+    packer_path = os.getenv("HOME") .. "\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\packer.nvim"
 else
-    packer_path = os.getenv("HOME") .. "/.local/share/nvim/site/pack/packer"
+    packer_path = os.getenv("HOME") .. "/.local/share/nvim/site/pack/packer/start/packer.nvim"
 end
 
 if not lua_utils.is_file_exist(packer_path) then
     local ret = os.execute("git clone --depth 1 https://github.com/wbthomason/packer.nvim " ..
-        "~/.local/share/nvim/site/pack/packer/start/packer.nvim")
+        packer_path)
     if ret then
         return {}
     end
