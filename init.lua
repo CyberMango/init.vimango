@@ -23,7 +23,7 @@ require("vimscript_utils")
 -- <1>  General and UI configs
 -----------------------------------------
 -- init.lua's directory.
-VIMD = vim.env.MYVIMRC:sub(1, -string.len('init.lua') - 2)
+VIMD = vim.env.MYVIMRC:sub(1, -string.len("init.lua") - 2)
 vim.cmd(string.format("let VIMD = '%s'", VIMD))
 vim.cmd(string.format("let $VIMD = '%s'", VIMD))
 
@@ -32,9 +32,9 @@ vim.cmd(string.format("let $VIMD = '%s'", VIMD))
 vim.wo.number = true
 lua_utils.set.cursorline = true
 vim.wo.wrap = false
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 -- Show current position in the file.
 lua_utils.set.ruler = true
 -- Always show the sign column (the column that marks lines with errors).
@@ -50,16 +50,16 @@ lua_utils.set.smartcase = true
 lua_utils.set.incsearch = true
 lua_utils.set.hlsearch = true
 -- Cancel search highlight on esc press.
-vim.keymap.set('n', '<esc>', '<esc>:noh<cr>', { silent = true })
+vim.keymap.set("n", "<esc>", "<esc>:noh<cr>", { silent = true })
 
 -- Easy system clipboard copy-paste.
-vim.keymap.set('i', '<c-c>', '<nop>')
-vim.keymap.set('v', '<c-c>', '<nop>')
-vim.keymap.set('v', '<c-c>c', '"+y')
-vim.keymap.set('v', '<c-c>x', '"+d')
-vim.keymap.set('v', '<c-c>v', '"+p')
-vim.keymap.set('n', '<c-c>v', '"+p')
-vim.keymap.set('i', '<c-c>v', '<esc>"+pa')
+vim.keymap.set("i", "<c-c>", "<nop>")
+vim.keymap.set("v", "<c-c>", "<nop>")
+vim.keymap.set("v", "<c-c>c", '"+y')
+vim.keymap.set("v", "<c-c>x", '"+d')
+vim.keymap.set("v", "<c-c>v", '"+p')
+vim.keymap.set("n", "<c-c>v", '"+p')
+vim.keymap.set("i", "<c-c>v", '<esc>"+pa')
 
 -- Don't redraw while executing macros (good performance config).
 lua_utils.set.lazyredraw = true
@@ -71,7 +71,7 @@ lua_utils.set.completeopt = "longest,menuone,preview"
 lua_utils.set.wildmenu = true
 lua_utils.set.wildmode = "longest,full"
 -- Command prompt completion keystroke is tab (\t).
-lua_utils.set.wildchar = ('\t'):byte()
+lua_utils.set.wildchar = ("\t"):byte()
 -- How to refer to wildchar inside of mappings (26 == ctrl-z).
 lua_utils.set.wildcharm = 26
 -- Ignore compiled files.
@@ -118,6 +118,18 @@ end, { silent = true, expr = true })
 
 -- Dont open files folded.
 lua_utils.set.foldlevel = 99
+
+-- Go down single visual lines in wrapped text.
+vim.keymap.set("n", "k", function() if vim.v.count == 0 then return 'gk' else return 'k' end end,
+    { expr = true, silent = true })
+vim.keymap.set("n", "j", function() if vim.v.count == 0 then return 'gj' else return 'j' end end,
+    { expr = true, silent = true })
+
+-- Highlight yanked lines.
+vim.api.nvim_create_autocmd("TextYankPost", {
+    command = "lua vim.highlight.on_yank()",
+    group = init_lua_aus,
+})
 
 -----------------------------------------
 -- <2>  Colors, Fonts, ...

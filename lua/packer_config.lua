@@ -5,10 +5,12 @@ local lua_utils = require("lua_utils")
 
 -- Install packer if its not already installed.
 local packer_path
+local is_bootstrap = false
+
 if vim.fn.has("win32") == 1 then
-    packer_path = os.getenv("HOME") .. "\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\packer.nvim"
+    packer_path = vim.fn.stdpath("data") .. "\\site\\pack\\packer\\start\\packer.nvim"
 else
-    packer_path = os.getenv("HOME") .. "/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 end
 
 if not lua_utils.is_file_exist(packer_path) then
@@ -18,13 +20,14 @@ if not lua_utils.is_file_exist(packer_path) then
         return {}
     end
 
-    lua_utils.set.rtp:append(packer_path .. "/start/packer.nvim")
+    vim.cmd("packadd packer.nvim")
+    is_bootstrap = true
 end
 
 -- Run PackerCompile everytime this file changes.
 local packer_config = vim.api.nvim_create_augroup("packer_config", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
-    pattern = "plugins.lua",
+    pattern = "packer_config.lua",
     command = "source <afile> | PackerCompile",
     group = packer_config,
 })
@@ -88,4 +91,15 @@ return require("packer").startup(function(use)
 
     --    " Auto close pairs. This is the best one, but it still doesnt suffice.
     --    "Plug 'cohama/lexima.vim'
+
+    if is_bootstrap then
+        require("packer").sync()
+
+        print "=================================="
+        print "    Plugins are being installed"
+        print "    Wait until Packer completes,"
+        print "       then restart nvim"
+        print "=================================="
+        return {}
+    end
 end)
