@@ -7,8 +7,3 @@ lua_utils.setlocal.path = (lua_utils.set.path + "/usr/include/**"):get()
 -- lua_utils.setlocal.path:append("/usr/include/**")
 
 lua_utils.setlocal.formatoptions:remove({ "r", "o" })
-
--- Hacky solution for server switching. See cpp.lua.
-UseCcls()
-UseClangd()
-UseClangd()

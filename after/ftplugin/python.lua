@@ -10,7 +10,7 @@ lua_utils.setlocal.path:append(os.getenv("HOME") .. "/.local/lib/**/site-package
 vim.keymap.set("n", "<leader>ti", "<c-w>s:terminal<cr>iipython<cr><c-l>", { silent = true, buffer = true })
 
 -- Run main with :make. See output again with :copen. Exists for compatability with cpp commands.
-vim.api.nvim_set_option_value("makeprg", "python3 main.py", { scope = "local" })
+lua_utils.setlocal.makeprg = "python3 main.py"
 
 -- Run current file with <F5> in a split window.
 vim.keymap.set("n", "<f5>", "<c-w>s4<c-w>-:terminal<space>python3<space>%<cr>i", { buffer = true })
