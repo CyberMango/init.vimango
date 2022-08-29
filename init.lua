@@ -211,24 +211,13 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end,
 })
 
--- Enable switching to last active buffer.
-if Last_buf == nil then
-    Last_buf = 1
-end
-vim.api.nvim_create_autocmd("BufLeave", {
-    callback = function()
-        Last_buf = vim.api.nvim_get_current_buf()
-    end,
-    group = init_lua_aus
-})
-
 -- Buffer navigation (mostly done with gb. Next/previous is for a lazy mood).
 vim.keymap.set("n", "gb", ":ls<CR>:b<space>")
 vim.keymap.set("n", "<leader>bn", ":bnext<cr>")
 vim.keymap.set("n", "<leader>bp", ":bprevious<cr>")
 vim.keymap.set("n", "<leader>bs", ":ls<cr>:sb<space>")
 vim.keymap.set("n", "<leader>bv", ":ls<cr>:vert sb<space>")
-vim.keymap.set("n", "<Leader>bb", ":lua vim.cmd('buffer ' .. Last_buf)<cr>", { silent = true })
+vim.keymap.set("n", "<Leader>bb", "<c-6>")
 
 -- Closing buffers.
 vim.keymap.set("n", "<leader>bd", ":ls<cr>:bdelete<space>")
