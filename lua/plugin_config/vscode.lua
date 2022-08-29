@@ -1,4 +1,4 @@
-local lua_utils = require("lua_utils")
+local vscode_lua_aus = vim.api.nvim_create_augroup("vscode_lua_aus", {})
 
 local function vscode_config()
     if "vscode" == vim.g.colors_name then
@@ -35,6 +35,6 @@ end
 vscode_config()
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-    group = lua_utils.reload_configs,
     callback = vscode_config,
+    group = vscode_lua_aus,
 })

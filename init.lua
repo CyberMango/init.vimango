@@ -99,7 +99,7 @@ lua_utils.set.visualbell = false
 lua_utils.set.timeoutlen = 500
 
 -- Reload vim configs when changing them.
-local init_lua_aus = vim.api.nvim_create_augroup("reload_configs", {})
+local init_lua_aus = vim.api.nvim_create_augroup("init_lua_aus", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
     command = "source <afile>",
     pattern = { VIMD .. "/*.vim", VIMD .. "/*.lua" },
@@ -149,7 +149,7 @@ lua_utils.set.formatoptions:remove({ "r", "o" })
 lua_utils.set.cpoptions:remove("_")
 
 -- Remove trailing whitespace on save (But I now have a smart plugin for it).
---vim.api.nvim_create_autocmd('BufWritePre', {command = '%s/\s\+$//e'})
+--vim.api.nvim_create_autocmd('BufWritePre', {command = '%s/\s\+$//e', group = init_lua_aus})
 
 -----------------------------------------
 -- <4>  Visual mode related
@@ -209,6 +209,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         vim.cmd("normal! g'\"")
         vim.cmd("normal zz")
     end,
+    group = init_lua_aus
 })
 
 -- Buffer navigation (mostly done with gb. Next/previous is for a lazy mood).
@@ -309,8 +310,11 @@ vim.keymap.set("t", "<c-b>j", "<c-\\><c-n><c-w>j")
 vim.keymap.set("t", "<c-b>k", "<c-\\><c-n><c-w>k")
 vim.keymap.set("t", "<c-b>l", "<c-\\><c-n><c-w>l")
 
-vim.api.nvim_create_autocmd("TermOpen", { command = "setlocal nonumber" })
-vim.api.nvim_create_autocmd("TermOpen", { command = "nnoremap <buffer><silent> Q :bd!<cr>" })
+vim.api.nvim_create_autocmd("TermOpen", { command = "setlocal nonumber", group = init_lua_aus })
+vim.api.nvim_create_autocmd("TermOpen", {
+    command = "nnoremap <buffer><silent> Q :bd!<cr>",
+    group = init_lua_aus
+})
 
 -----------------------------------------
 -- <9>  Spell checking

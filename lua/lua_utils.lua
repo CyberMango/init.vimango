@@ -3,7 +3,7 @@
 
 local lua_utils = {}
 
-lua_utils.reload_configs = vim.api.nvim_create_augroup("reload_configs", {})
+local lua_utils_aus = vim.api.nvim_create_augroup("lua_utils_aus", {})
 
 -- Use this to make it easier to move settings from vim.o to vim.opt if you ever swap the two.
 lua_utils.set = vim.opt
@@ -44,11 +44,11 @@ end
 function lua_utils.close_if_last(file_type)
     vim.api.nvim_create_autocmd("WinEnter", {
         callback = function()
-            if file_type == lua_utils.set.ft and 1 == lua_utils.table_length(vim.api.nvim_list_wins()) then
+            if file_type == lua_utils.set.ft:get() and 1 == lua_utils.table_length(vim.api.nvim_list_wins()) then
                 vim.cmd(":q")
             end
         end,
-        group = lua_utils.reload_configs
+        group = lua_utils_aus
     })
 end
 

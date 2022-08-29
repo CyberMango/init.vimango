@@ -1,5 +1,7 @@
 local lua_utils = require("lua_utils")
 
+local python_lua_aus = vim.api.nvim_create_augroup("python_lua_aus", {})
+
 --TODO change this when local path appending bug is solved.
 lua_utils.setlocal.path = (lua_utils.set.path + "/usr/lib/python*/**"):get()
 lua_utils.setlocal.path:append(os.getenv("HOME") .. "/.local/lib/**/site-packages/**")
@@ -27,9 +29,9 @@ local function config_vscode_colors()
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-    group = lua_utils.reload_configs,
     callback = config_vscode_colors,
     pattern = "*.py",
+    group = python_lua_aus,
 })
 
 config_vscode_colors()
