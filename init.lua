@@ -5,12 +5,11 @@
     <3>  Text, tab and indent related
     <4>  Visual mode related
     <5>  Tabpages, windows and buffers
-    <6>  Status line
-    <7>  Editing mappings
-    <8>  Integrated terminal settings
-    <9>  Spell checking
-    <10> Software developement related
-    <11> Config Scripts
+    <6>  Editing mappings
+    <7>  Integrated terminal settings
+    <8>  Spell checking
+    <9>  Software developement related
+    <10> Config Scripts
 -----------------------------------------]]
 
 -----------------------------------------
@@ -27,8 +26,7 @@ VIMD = vim.env.MYVIMRC:sub(1, -string.len("init.lua") - 2)
 vim.cmd(string.format("let VIMD = '%s'", VIMD))
 vim.cmd(string.format("let $VIMD = '%s'", VIMD))
 
-
--- General
+----- General
 vim.wo.number = true
 lua_utils.set.cursorline = true
 vim.wo.wrap = false
@@ -37,6 +35,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- Show current position in the file.
 lua_utils.set.ruler = true
+-- Always show the status line.
+lua_utils.set.laststatus = 2
 -- Always show the sign column (the column that marks lines with errors).
 lua_utils.set.signcolumn = "yes"
 -- Scroll page with 1 line space.
@@ -52,19 +52,10 @@ lua_utils.set.hlsearch = true
 -- Cancel search highlight on esc press.
 vim.keymap.set("n", "<esc>", "<esc>:noh<cr>", { silent = true })
 
--- Easy system clipboard copy-paste.
-vim.keymap.set("i", "<c-c>", "<nop>")
-vim.keymap.set("v", "<c-c>", "<nop>")
-vim.keymap.set("v", "<c-c>c", '"+y')
-vim.keymap.set("v", "<c-c>x", '"+d')
-vim.keymap.set("v", "<c-c>v", '"+p')
-vim.keymap.set("n", "<c-c>v", '"+p')
-vim.keymap.set("i", "<c-c>v", '<esc>"+pa')
-
 -- Don't redraw while executing macros (good performance config).
 lua_utils.set.lazyredraw = true
 
--- How vim completions work
+-- How vim completions work.
 lua_utils.set.completeopt = "longest,menuone,preview"
 
 -- Set wildmenu (autocompletions in command line).
@@ -77,25 +68,22 @@ lua_utils.set.wildcharm = 26
 -- Ignore compiled files.
 lua_utils.set.wildignore = "*.o,*~,*.pyc"
 
--- Configure backspace so it acts as it should act
-lua_utils.set.backspace = "eol,start,indent"
-
--- Allow left/right to move between lines
+-- Allow left/right to move between lines.
 --lua_utils.set.whichwrap = lua_utils.set.whichwrap .. '<,>,h,l'
 
--- For regular expressions turn magic on
+-- For regular expressions turn magic on.
 lua_utils.set.magic = true
 
--- Show matching brackets when text indicator is over them
+-- Show matching brackets when text indicator is over them.
 lua_utils.set.showmatch = true
--- How many tenths of a second to blink when matching brackets
+-- How many tenths of a second to blink when matching brackets.
 lua_utils.set.mat = 2
 --
--- No annoying sound on errors
+-- No annoying sound on errors.
 lua_utils.set.errorbells = false
 lua_utils.set.visualbell = false
 
--- wait 500 milliseconds for mappings to complete
+-- wait 500 milliseconds for mappings to complete.
 lua_utils.set.timeoutlen = 500
 
 -- Reload vim configs when changing them.
@@ -116,20 +104,11 @@ vim.keymap.set("i", "<home>", function()
     return "<esc>" .. lua_utils.goto_line_start() .. "i"
 end, { silent = true, expr = true })
 
--- Dont open files folded.
-lua_utils.set.foldlevel = 99
-
 -- Go down single visual lines in wrapped text.
 vim.keymap.set("n", "k", function() if vim.v.count == 0 then return 'gk' else return 'k' end end,
     { expr = true, silent = true })
 vim.keymap.set("n", "j", function() if vim.v.count == 0 then return 'gj' else return 'j' end end,
     { expr = true, silent = true })
-
--- Highlight yanked lines.
-vim.api.nvim_create_autocmd("TextYankPost", {
-    command = "lua vim.highlight.on_yank()",
-    group = init_lua_aus,
-})
 
 -----------------------------------------
 -- <2>  Colors, Fonts, ...
@@ -269,13 +248,7 @@ vim.keymap.set("n", "<Leader>tt", ":lua vim.cmd('tabnext ' .. Last_tab)<cr>", { 
 vim.keymap.set("n", "<leader>cd", ":cd %:p:h<cr>")
 
 -----------------------------------------
--- <6>  Status line
------------------------------------------
--- Always show the status line
-lua_utils.set.laststatus = 2
-
------------------------------------------
--- <7>  Editing mappings
+-- <6>  Editing mappings
 -----------------------------------------
 -- Move lines of text using alt+shift+h/j/k/l.
 vim.keymap.set('n', '<c-j>', 'mz:m+<cr>`z')
@@ -287,7 +260,7 @@ vim.keymap.set('v', '<c-h>', '<gv4h')
 vim.keymap.set('n', '<c-l>', '>>')
 vim.keymap.set('n', '<c-h>', '<<')
 
--- Allow paste and undo in insert and visual mode.
+-- Allow paste in insert mode.
 vim.keymap.set('i', '<c-v>', '<c-g>u<esc>pa<c-g>u')
 
 -- Make Y yank to end of line (much like C and D).
@@ -306,8 +279,26 @@ lua_utils.set.undoreload = 10000
 vim.keymap.set('i', '{<cr>', '{<cr><c-g>u}<esc>O')
 vim.keymap.set('i', '(<cr>', '(<cr><c-g>u)<esc>O')
 
+-- Easy system clipboard copy-paste.
+vim.keymap.set("i", "<c-c>", "<nop>")
+vim.keymap.set("v", "<c-c>", "<nop>")
+vim.keymap.set("v", "<c-c>c", '"+y')
+vim.keymap.set("v", "<c-c>x", '"+d')
+vim.keymap.set("v", "<c-c>v", '"+p')
+vim.keymap.set("n", "<c-c>v", '"+p')
+vim.keymap.set("i", "<c-c>v", '<esc>"+pa')
+
+-- Highlight yanked lines.
+vim.api.nvim_create_autocmd("TextYankPost", {
+    command = "lua vim.highlight.on_yank()",
+    group = init_lua_aus,
+})
+
+-- Configure backspace so it acts as it should act.
+lua_utils.set.backspace = "eol,start,indent"
+
 -----------------------------------------
--- <8>  Integrated terminal settings
+-- <7>  Integrated terminal settings
 -----------------------------------------
 -- Openning terminals.
 vim.keymap.set("n", "gs", "<c-w>s:terminal<cr>i", { silent = true })
@@ -329,7 +320,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 -----------------------------------------
--- <9>  Spell checking
+-- <8>  Spell checking
 -----------------------------------------
 -- Toggle spell checking.
 vim.keymap.set("n", "<leader>pt", ":setlocal spell!<cr>")
@@ -341,10 +332,9 @@ vim.keymap.set("n", "<leader>pa", "zg")
 vim.keymap.set("n", "<leader>p?", "z=")
 
 -----------------------------------------
--- <10> Software developement related
+-- <9> Software developement related
 -----------------------------------------
 -- Basic debugging with gdb inside of vim.
---command! -nargs=1 GDB packadd termdebug | Termdebug <args>
 vim.api.nvim_create_user_command("GDB", "packadd termdebug | Termdebug <args>", { nargs = 1 })
 
 -- Shortcuts for using the quickfix list (used by :make and other commands).
@@ -361,8 +351,11 @@ vim.keymap.set("n", "<leader>lp", ":lprevious<cr>")
 -- If quickfix/location list is the last buffer opened, close it.
 lua_utils.close_if_last("qf")
 
+-- Dont open files folded.
+lua_utils.set.foldlevel = 99
+
 ----------------------------------------
--- <11> Config Scripts
+-- <10> Config Scripts
 -----------------------------------------
 -- Plugins.
 require("packer_config")
