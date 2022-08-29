@@ -6,8 +6,7 @@ lua_utils.setlocal.cindent = true
 vim.api.nvim_set_option_value('makeprg', 'make', {scope = 'local'})
 
 --TODO change this when local path appending bug is solved.
-lua_utils.setlocal.path:append(lua_utils.set.path._value)
-lua_utils.setlocal.path:append("/usr/include/**")
+lua_utils.setlocal.path = (lua_utils.set.path + "/usr/include/**"):get()
 -- lua_utils.setlocal.path:append("/usr/include/**")
 
 lua_utils.setlocal.formatoptions:remove({ "r", "o" })

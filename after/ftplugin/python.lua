@@ -1,9 +1,8 @@
 local lua_utils = require("lua_utils")
 
 --TODO change this when local path appending bug is solved.
-lua_utils.setlocal.path:append(lua_utils.set.path._value)
-lua_utils.setlocal.path:append("~/.local/lib/**/site-packages/**")
-lua_utils.setlocal.path:append("/usr/lib/python*/**")
+lua_utils.setlocal.path = (lua_utils.set.path + "/usr/lib/python*/**"):get()
+lua_utils.setlocal.path:append(os.getenv("HOME") .. "/.local/lib/**/site-packages/**")
 
 -- Run ipython with <leader>ti
 vim.keymap.set("n", "<leader>ti", "<c-w>s:terminal<cr>iipython<cr><c-l>", { silent = true, buffer = true })
