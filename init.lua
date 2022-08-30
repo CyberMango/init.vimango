@@ -39,8 +39,9 @@ lua_utils.set.ruler = true
 lua_utils.set.laststatus = 2
 -- Always show the sign column (the column that marks lines with errors).
 lua_utils.set.signcolumn = "yes"
--- Scroll page with 1 line space.
+-- Scroll with a space from the edge of the window.
 lua_utils.set.scrolloff = 1
+lua_utils.set.sidescrolloff = 1
 -- Number of commands to remember.
 lua_utils.set.history = 500
 
@@ -131,6 +132,8 @@ lua_utils.set.tabstop     = 4
 lua_utils.set.softtabstop = 4
 
 lua_utils.set.autoindent = true
+-- Round the shift (tab) to a multiply of shiftwidth.
+lua_utils.set.shiftround = true
 
 -- Dont auto comment when going down a line in a comment with enter or O/o .
 -- (needs to be specifically set for some file types due to ftplugins).
