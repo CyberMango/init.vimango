@@ -16,7 +16,7 @@ end
 if not lua_utils.is_file_exist(packer_path) then
     local ret = os.execute("git clone --depth 1 https://github.com/wbthomason/packer.nvim " ..
         packer_path)
-    if ret then
+    if 0 ~= ret then
         return {}
     end
 
