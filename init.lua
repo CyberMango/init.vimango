@@ -57,7 +57,7 @@ vim.keymap.set("n", "<esc>", "<esc>:noh<cr>", { silent = true })
 lua_utils.set.lazyredraw = true
 
 -- How vim completions work.
-lua_utils.set.completeopt = "longest,menuone,preview"
+lua_utils.set.completeopt = "longest,menuone"
 
 -- Set wildmenu (autocompletions in command line).
 lua_utils.set.wildmenu = true
