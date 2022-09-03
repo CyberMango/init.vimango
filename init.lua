@@ -66,8 +66,8 @@ lua_utils.set.wildmode = "longest,full"
 lua_utils.set.wildchar = ("\t"):byte()
 -- How to refer to wildchar inside of mappings (26 == ctrl-z).
 lua_utils.set.wildcharm = 26
--- Ignore compiled files.
-lua_utils.set.wildignore = "*.o,*~,*.pyc"
+-- Ignore these file patterns when expanding file names.
+lua_utils.set.wildignore = "*.o,*~,*.pyc,*.doc,*.docx,*.jpg,*.gif,*.exe,*.img"
 
 -- Allow left/right to move between lines.
 --lua_utils.set.whichwrap = lua_utils.set.whichwrap .. '<,>,h,l'
@@ -87,11 +87,11 @@ lua_utils.set.visualbell = false
 -- wait 500 milliseconds for mappings to complete.
 lua_utils.set.timeoutlen = 500
 
--- Reload vim configs when changing them.
+-- Reload init.lua when it changes.
 local init_lua_aus = vim.api.nvim_create_augroup("init_lua_aus", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = "init.lua",
     command = "source <afile>",
-    pattern = { VIMD .. "/*.vim", VIMD .. "/*.lua" },
     group = init_lua_aus
 })
 
@@ -149,12 +149,15 @@ lua_utils.set.cpoptions:remove("_")
 -- <4>  Visual mode related
 -----------------------------------------
 -- Visual mode pressing * or # searches for the current selection
-vim.keymap.set('v', '*', ':<C-u>call VisualSelection("", "")<CR>/<C-R>=@/<CR><CR>', { silent = true })
-vim.keymap.set('v', '#', ':<C-u>call VisualSelection("", "")<CR>?<C-R>=@/<CR><CR>', { silent = true })
+vim.keymap.set("v", "*", ':<C-u>call VisualSelection("", "")<CR>/<C-R>=@/<CR><CR>', { silent = true })
+vim.keymap.set("v", "#", ':<C-u>call VisualSelection("", "")<CR>?<C-R>=@/<CR><CR>', { silent = true })
 
 -- Stay in visual mode after indenting
-vim.keymap.set('v', '>', '>gv')
-vim.keymap.set('v', '<', '<gv')
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv")
+
+-- Pasting over visually selected text wont copy it.
+vim.keymap.set("v", "p", '"_dP')
 
 -----------------------------------------
 -- <5>  Tabpages, windows and buffers

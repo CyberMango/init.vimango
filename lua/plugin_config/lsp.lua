@@ -19,6 +19,9 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 vim.keymap.set("n", "<leader>ss", toggle_diagnostics, opts)
 
+-- Make these shortcuts do nothing on file without an lsp (to avoid accidental edits).
+vim.keymap.set("n", "gr", "<nop>", opts)
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer.
 local on_attach = function(_, bufnr)

@@ -25,11 +25,11 @@ if not lua_utils.is_file_exist(packer_path) then
 end
 
 -- Run PackerCompile everytime this file changes.
-local packer_config = vim.api.nvim_create_augroup("packer_config", {})
+local packer_config_aus = vim.api.nvim_create_augroup("packer_config_aus", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = "packer_config.lua",
-    command = "source <afile> | PackerCompile",
-    group = packer_config,
+    command = "source <afile> | PackerSync",
+    group = packer_config_aus,
 })
 
 local function get_config(name)
@@ -45,8 +45,16 @@ return require("packer").startup(function(use)
     ]]
     use("wbthomason/packer.nvim")
 
-    -- Basic LSP configurations
-    use({ "neovim/nvim-lspconfig", config = get_config("lsp") })
+    --[[LSP configurations and auto install.
+        :LspInstall <server> - Install new language servers.
+        :LspUninstall <server> - Uninstall the language server name.
+        :Mason - See status of the mason plugin that manages installed language servers.
+    ]]
+    use({ "williamboman/mason.nvim", config = get_config("mason") })
+    use({ "williamboman/mason-lspconfig.nvim", config = get_config("mason-lspconfig"),
+        requires = { { "williamboman/mason.nvim" } } })
+    use({ "neovim/nvim-lspconfig", config = get_config("lsp"),
+        requires = { { "williamboman/mason.nvim" }, { "williamboman/mason-lspconfig.nvim" } } })
 
     --[[treesitter - Better syntax highlighting, folding, indentation, and node selection features.
         Also, other plugins cna use this as well for more advanced features.
