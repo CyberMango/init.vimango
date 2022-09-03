@@ -1,5 +1,5 @@
 In vim, undoing is not linear!
-every time you action A, and do action B, you can actually go back to when you had done action A!
+every time you undo action A, and then do action B, you can actually go back to when you had done action A!
 Ways to do this:
     :earlier {n} to go back to older state n times.
     :earlier {n}s to go back in time n seconds.
