@@ -9,8 +9,8 @@ nmap  <c-/>
 
 """ Settings
 call defx#custom#column('icon', {
-    \ 'directory_icon': '⮞',
-    \ 'opened_icon': '⮟',
+    \ 'directory_icon': '>',
+    \ 'opened_icon': 'v',
     \ 'root_icon': ' ',
     \ })
 

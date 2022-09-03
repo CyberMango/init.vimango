@@ -1,4 +1,5 @@
-symbol based navigation: navigating the file based on its symbols, without an lsp or tags file.
+Symbol based navigation: navigating the file based on its symbols, without an lsp or tags file.
+A summary of github's romainl/vim_pushing_built-in_features_beyond_their_limits.markdown .
 
 commands:
 - :set path = a variable used as directories for file searching by many functions.
@@ -35,4 +36,3 @@ function! CCR()
 endfunction
 cnoremap <expr> <CR> CCR()
 
-for a more generalized version, see in github romainl/vim_pushing_built-in_features_beyond_their_limits.markdown .
