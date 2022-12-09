@@ -90,6 +90,12 @@ return require("packer").startup(function(use)
     use("luisiacc/gruvbox-baby")
     use({ "Mofiqul/vscode.nvim", config = get_config("vscode") })
 
+    -- Autocompletion plugin.
+    use("hrsh7th/cmp-buffer")
+    use("hrsh7th/cmp-nvim-lsp")
+    use("hrsh7th/cmp-path")
+    use({ "hrsh7th/nvim-cmp", config = get_config("nvim_cmp") })
+
     --    " Snippets
     --    Plug 'sirver/UltiSnips'
 

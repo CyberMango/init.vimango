@@ -57,7 +57,7 @@ vim.keymap.set("n", "<esc>", "<esc>:noh<cr>", { silent = true })
 lua_utils.set.lazyredraw = true
 
 -- How vim completions work.
-lua_utils.set.completeopt = "longest,menuone"
+lua_utils.set.completeopt = { "longest", "menuone" }
 
 -- Set wildmenu (autocompletions in command line).
 lua_utils.set.wildmenu = true
@@ -97,6 +97,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 -- Allow mouse control in normal, visual and command modes.
 --lua_utils.set.mouse = "nvc"
+lua_utils.set.mouse = ""
 
 -- Make 0 behave like <home> on most editors.
 vim.keymap.set("n", "0", lua_utils.goto_line_start, { silent = true, expr = true })
