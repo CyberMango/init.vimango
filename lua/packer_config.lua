@@ -90,11 +90,14 @@ return require("packer").startup(function(use)
     use("luisiacc/gruvbox-baby")
     use({ "Mofiqul/vscode.nvim", config = get_config("vscode") })
 
-    -- Autocompletion plugin.
+    -- Autocompletion plugin. TODO configure it right.
     use("hrsh7th/cmp-buffer")
     use("hrsh7th/cmp-nvim-lsp")
     use("hrsh7th/cmp-path")
     use({ "hrsh7th/nvim-cmp", config = get_config("nvim_cmp") })
+
+	-- Snippets plugin. TODO actually configure it. Its currently just to make nvm-cmp not crush.
+	use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
 
     --    " Snippets
     --    Plug 'sirver/UltiSnips'

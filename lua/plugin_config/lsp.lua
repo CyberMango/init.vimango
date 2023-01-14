@@ -46,7 +46,7 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting, bufopts)
+    vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, bufopts)
 
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -93,6 +93,7 @@ local function ccls_attach()
         flags = lsp_flags,
     })
 end
+
 clangd_attach()
 
 function UseClangd()

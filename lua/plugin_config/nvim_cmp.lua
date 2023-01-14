@@ -1,18 +1,25 @@
 local cmp = require("cmp")
+local luasnip = require("luasnip")
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 
 cmp.setup({
+    snippet = {
+        -- REQUIRED - you must specify a snippet engine
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+        end,
+    },
     sources = {
         { name = "path" },
         { name = "nvim_lsp", keyword_length = 2 },
         { name = "buffer", keyword_length = 4 },
-        --{ name = "luasnip", keyword_length = 2 },
+        { name = "luasnip", keyword_length = 2 },
     },
     --window = {
     --    documentation = cmp.config.window.bordered()
     --},
     formatting = {
-        fields = { "menu", "abbr", "kind" },
+        fields = { "abbr", "kind" },
         format = function(entry, item)
             local menu_icon = {
                 nvim_lsp = "L",
@@ -38,31 +45,29 @@ cmp.setup({
         ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
 
-        --["<C-d>"] = cmp.mapping(function(fallback)
-        --    if luasnip.jumpable(1) then
-        --        luasnip.jump(1)
-        --    else
-        --        fallback()
-        --    end
-        --end, { "i", "s" }),
+        ["<C-d>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(1) then
+                luasnip.jump(1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
 
-        --["<C-b>"] = cmp.mapping(function(fallback)
-        --    if luasnip.jumpable(-1) then
-        --        luasnip.jump(-1)
-        --    else
-        --        fallback()
-        --    end
-        --end, { "i", "s" }),
+        ["<C-b>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
 
         ["<Tab>"] = cmp.mapping(function(fallback)
             local col = vim.fn.col(".") - 1
 
             if cmp.visible() then
                 cmp.select_next_item(select_opts)
-            elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-                fallback()
             else
-                cmp.complete()
+                fallback()
             end
         end, { "i", "s" }
         ),
@@ -79,12 +84,13 @@ cmp.setup({
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won"t work anymore).
-cmp.setup.cmdline({ "/", "?" }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = "buffer", keyword_length = 2 }
-    }
-})
+--TODO this makes it so that you cant use <tab> in commands. need to find a way to fix.
+--cmp.setup.cmdline({ "/", "?" }, {
+--    mapping = cmp.mapping.preset.cmdline(),
+--    sources = {
+--        { name = "buffer", keyword_length = 2 }
+--    }
+--})
 
 -- Set up lspconfig.
 local lspconfig = require("lspconfig")

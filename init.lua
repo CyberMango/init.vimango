@@ -90,7 +90,7 @@ lua_utils.set.timeoutlen = 500
 -- Reload init.lua when it changes.
 local init_lua_aus = vim.api.nvim_create_augroup("init_lua_aus", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
-    pattern = "init.lua",
+    pattern = string.format("%s/init.lua", VIMD),
     command = "source <afile>",
     group = init_lua_aus
 })
